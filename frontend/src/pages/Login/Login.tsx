@@ -14,14 +14,15 @@ function Login() {
     const [email, setEmail] = useState<any>('');  
     const [password, setPassword] = useState<any>('');
     const [logged, signin, token] = useContext(AuthContext);
-    const [message, setMessage] = useState('');
-    // useEffect(()=>{
-    //     //se já estiver logado ele simplesmente já direciona para a rota privada
-    //     if(token){
-    //         navigate('/private');
-    //         return;
-    //     }
-    // },[]);
+    // const [message, setMessage] = useState('');
+    useEffect(()=>{
+        //se já estiver logado ele simplesmente já direciona para a rota privada
+        if(token){
+            navigate('/private');
+            
+            return;
+        }
+    },[]);
     
   
     async function handleSubmit(){
@@ -29,12 +30,13 @@ function Login() {
 
         const result = await signin(email, password);
         if(result){
+           
             console.log('logado');
-            navigate('/private')
+            navigate('/private');
             window.location.reload();
             return true;
         }else{
-            setMessage('CREDENCIAIS INCORRETAS');
+            message.error('Email ou senha incorretos');
             console.log('deslogado');
             return false;
             
@@ -60,7 +62,7 @@ function Login() {
   return (
         
       <div>
-        <Notification/>
+        
         Login
         <Row 
         justify="center"

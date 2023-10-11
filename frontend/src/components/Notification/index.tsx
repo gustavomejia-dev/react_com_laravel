@@ -24,7 +24,7 @@ export const Notification = () => {
 
   return (
     <div>
-      <button onClick={() => openNotificationWithIcon('success')}>CLick</button>
+      <button onClick={() => openNotificationWithIcon}>CLick</button>
         {contextHolder}
     </div>
   )
