@@ -60,7 +60,7 @@ function Login() {
   return (
         
       <div>
-        <Notification message={'Suco'} visible={true}/>
+        <Notification/>
         Login
         <Row 
         justify="center"
