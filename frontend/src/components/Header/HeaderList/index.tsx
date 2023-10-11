@@ -22,7 +22,7 @@ export const Ul = () => {
      
       if(isLogout){
         setLoading(false);
-        // window.location.reload();
+        window.location.reload();
         navigate('/login');
         return
       }
