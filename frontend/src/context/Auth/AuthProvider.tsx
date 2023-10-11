@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { AuthContext } from "./AuthContext";
 import { apiUrl, useApi } from "../../hooks/useApi";
-import { setTokenLogin, getTokenLogin } from "../../utils/tokenLogin";
+import { setTokenLogin, getTokenLogin, removeTokenLogin } from "../../utils/tokenLogin";
+import { removeDataUser, setDataUser } from "../../utils/dataUser";
 
 type childrenType = {
     children: JSX.Element
@@ -19,13 +20,19 @@ export const AuthProvider = ({children}: childrenType) => {
         
         const auth = await api.signin(email, password);
         // console.log('provider', auth.data.result.token);
-        
+        setDataUser(auth.data.result.user);
         setIsLogged(auth.data.result.user);//dados do usuario
         setTokenLogin(auth.data.result.token);//token 
     }
 
+    
+
     const signout = async () => {
         const isLogout = await api.signout();
+        // removeTokenLogin();
+        // removeDataUser();
+        console.log('deslog');
+       
     }
     const token = getTokenLogin();//obtem o token 
     return(

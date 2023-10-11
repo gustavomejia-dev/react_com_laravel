@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
  
 
 // Route::post('/login', [LoginController::class, 'login']);
-// Route::apiResource('/users', UserController::class);
+Route::apiResource('/users', UserController::class);
 // Route::delete('/users/{id}', [UserController::class, 'destroy']);
 // Route::patch('/users/{id}', [UserController::class, 'update']);
 // Route::get('/users/{id}', [UserController::class, 'show']);

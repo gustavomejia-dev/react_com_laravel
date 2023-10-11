@@ -21,15 +21,17 @@ function Login() {
     //         return;
     //     }
     // },[]);
-
+    
   
     async function handleSubmit(){
 
 
         await signin(email, password);
-        console.log(token);
+        // console.log(token);
         if(!logged){
             navigate('/private')
+           
+           
         }else{
             console.log('deslogado');
         }

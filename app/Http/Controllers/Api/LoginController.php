@@ -30,6 +30,7 @@ class LoginController extends Controller
         $user->tokens()->delete();//desloga de todos os outros dispositivos logados
         
         $token = $user->createToken('token_name')->plainTextToken;
+        
         // return response()->json($token);
         // $token = $request->user()->createToken($request->token_name);
         
@@ -45,5 +46,13 @@ class LoginController extends Controller
 
     public function register(){
         return response()->json('authorized', 200);
+    }
+
+    public function logout(Request $request){
+        
+
+        // delete the current token that was used for the request
+        $request->user()->currentAccessToken()->delete();
+        return response()->json('oii', 200);
     }
 }

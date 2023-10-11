@@ -8,7 +8,8 @@ export const config: AxiosRequestConfig = {
     
     timeout: 60 * 1000,
     headers: {
-        Authorization: getTokenLogin(),
+        // Authorization: getTokenLogin(),
+        Authorization:  'PnPDUW63l5d94T68d72EAHRmG8UOTN09ATCzbuSp0b5be457',
     //   'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
@@ -18,9 +19,10 @@ export const config: AxiosRequestConfig = {
 
 export const useApi = () => ({
     signin: async(email: string, password: string) =>{
+        
         // const result = await axios.post('https://reqres.in/api/login', {email, password});
         const result = await apiUrl.post('login', {email, password}, config)
-     
+        
         return result;
         
     },

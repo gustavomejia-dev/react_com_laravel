@@ -9,3 +9,8 @@ export const setTokenLogin = (tokenLogin: string) => {
     // console.log('toen apos log ', localStorage.getItem('setKey'));
     return localStorage.setItem("key", tokenLogin);
 }
+
+export const removeTokenLogin = () => {
+    localStorage.removeItem("key");
+    return true;
+}
