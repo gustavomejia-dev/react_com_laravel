@@ -53,6 +53,6 @@ class LoginController extends Controller
 
         // delete the current token that was used for the request
         $request->user()->currentAccessToken()->delete();
-        return response()->json('oii', 200);
+        return response()->json(['result' => 'success'], 200);
     }
 }

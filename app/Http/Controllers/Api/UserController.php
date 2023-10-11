@@ -20,6 +20,7 @@ class UserController extends Controller
     }
     
     public function store(StoreUpdateUserRequest $request){
+        
         $data = $request->validated();//enviando apenas valores validados
   
         $data['passowrd'] = bcrypt($request->password);//encript password

@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/Auth/AuthContext';
 import React, { useContext, useEffect, useState } from 'react'
 import { getTokenLogin } from '../../utils/tokenLogin';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Notification } from '../../components/Notification';
 import Private from '../Private/Private';
 function Login() {
     
@@ -13,7 +14,7 @@ function Login() {
     const [email, setEmail] = useState<any>('');  
     const [password, setPassword] = useState<any>('');
     const [logged, signin, token] = useContext(AuthContext);
-    
+    const [message, setMessage] = useState('');
     // useEffect(()=>{
     //     //se já estiver logado ele simplesmente já direciona para a rota privada
     //     if(token){
@@ -26,15 +27,23 @@ function Login() {
     async function handleSubmit(){
 
 
-        await signin(email, password);
-        // console.log(token);
-        if(!logged){
+        const result = await signin(email, password);
+        if(result){
+            console.log('logado');
             navigate('/private')
-           
-           
+            window.location.reload();
+            return true;
         }else{
+            setMessage('CREDENCIAIS INCORRETAS');
             console.log('deslogado');
+            return false;
+            
         }
+           
+        // console.log(result);
+        // console.log(token);
+        // console.log('resultado do login ' + result);
+       
     }
 
     const handleInputEmail = (event : any) => {
@@ -49,8 +58,10 @@ function Login() {
          // const auth = useApi.signin('skat@hotmail.com', '123456');
         //   console.log(teste);
   return (
-      <div>
         
+      <div>
+        <Notification message={'Suco'} visible={true}/>
+        Login
         <Row 
         justify="center"
         align="middle"
@@ -66,6 +77,7 @@ function Login() {
                     </Form.Item>
                     <Form.Item label='Password' name='password'>
                         <Input.Password onChange={handleInputPassword}/>
+
                     </Form.Item>
     
                     <Form.Item wrapperCol={{offset:8, span:16}}>
@@ -75,7 +87,7 @@ function Login() {
             </Col>
             
         </Row>
-        <Link to={'/private'}>Não tem Conta? Cadastre-se</Link>
+        {/* <Link to={'/private'}>Não tem Conta? Cadastre-se</Link> */}
 
 
         
