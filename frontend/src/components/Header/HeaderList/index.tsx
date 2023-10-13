@@ -21,14 +21,13 @@ export const Ul = () => {
      
      
       if(isLogout){
-        setLoading(false);
+        
         window.location.reload();
-        navigate('/login');
+        
+        setLoading(false);
         return
       }
-      else{
-        console.log('ocorreu algum problema');
-      }
+      
       
       
       

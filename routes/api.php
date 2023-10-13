@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +19,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-
+ Route::post('/forgot-password',[PasswordResetLinkController::class, 'store']);
+//  Route::post('/forgotpassword',[LoginController::class, 'forgotPassword']);
+ Route::post('/confirmToken',[LoginController::class, 'confirmToken']);
  Route::post('login', [LoginController::class, 'login']);
  Route::middleware(['auth:sanctum'])->group(function (){
     // Route::apiResource('/users', UserController::class);

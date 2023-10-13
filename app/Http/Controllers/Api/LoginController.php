@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AuthRequest;
+use App\Mail\MailableResetPassword;
 use App\Models\User;
+use App\Models\UserForgotPassword;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 
 class LoginController extends Controller
 {
@@ -54,5 +59,36 @@ class LoginController extends Controller
         // delete the current token that was used for the request
         $request->user()->currentAccessToken()->delete();
         return response()->json(['result' => 'success'], 200);
+    }
+
+
+    public function confirmToken(Request $request){
+        $token = $request->only(['token']);
+        
+
+        return response()->json(['result' => $token], 200);
+    }
+    public function forgotPassword(Request $request){
+        $email = $request->validate(['email' => 'required|email']);//criar regra para não enviar email, se o email for invalido
+        
+        
+        $token = 'K7872K9';//tem que criar metodo para gerar tokens aleatorios
+        try{
+                    $sendEmail = Mail::to('ti@wdio.com.br', 'Suporte')->send(new MailableResetPassword(
+                        [
+
+
+                            'fromEmail' => $email['email'],
+                            'token' => $token
+
+                        ]) ) ;
+                    
+                    UserForgotPassword::create(['name' => '', 'email' => $email['email'], 'token' => $token]);
+                    return response()->json(['result' => 'success'], 200);
+        }catch(Exception $error){
+            return response()->json(['result' => 'error'], 200);
+        }
+        
+
     }
 }

@@ -15,6 +15,9 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
+Route::get('/testandoo', function () {
+    return view('auth.forgot-password');
+})->middleware('guest')->name('password.request');
 Route::get('/', function () {
     return view('welcome');
 });
