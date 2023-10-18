@@ -7,6 +7,7 @@ import { getTokenLogin } from '../../utils/tokenLogin';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Notification } from '../../components/Notification';
 import Private from '../Private/Private';
+import ForgetPassword from '../../components/Password/ForgetPassword';
 function Login() {
     
     // const [theme, toggleTheme] = useContext(AuthContext);
@@ -14,6 +15,7 @@ function Login() {
     const [email, setEmail] = useState<any>('');  
     const [password, setPassword] = useState<any>('');
     const [logged, signin, token] = useContext(AuthContext);
+    const [showModal, setShowModal] = useState(false);
     // const [message, setMessage] = useState('');
     useEffect(()=>{
         //se já estiver logado ele simplesmente já direciona para a rota privada
@@ -24,7 +26,7 @@ function Login() {
         }
     },[]);
     
-  
+ 
     async function handleSubmit(){
 
 
@@ -56,12 +58,16 @@ function Login() {
     const handleInputPassword = (event : any) => {
         setPassword(event.target.value);
 
-}
-         // const auth = useApi.signin('skat@hotmail.com', '123456');
-        //   console.log(teste);
+}   
+
+    const modal = () => {
+        console.log('oi');
+            setShowModal(true);
+        return;
+    }
   return (
         
-      <div>
+      <div className='container align-self-center'>
         
         Login
         <Row 
@@ -85,10 +91,25 @@ function Login() {
                     <Form.Item wrapperCol={{offset:8, span:16}}>
                         <Button  type='primary' htmlType='submit'>Logar</Button>
                     </Form.Item>
+                    
                 </Form>
+                <ForgetPassword isOpen={showModal} setModalOpen={() => setShowModal(!showModal)}/>
             </Col>
             
         </Row>
+
+       {/* {showModal  == true ?
+                <div className='align-self-center'>
+                    oiii
+                <button onClick={() => setShowModal(false)}>Fechar</button>
+                </div>
+        : ''        
+        } */}
+        <Button style={{textAlign:'center', alignItems:'center'}}  type="primary" onClick={() => setShowModal(true)}>
+            Esqueceu sua Senha ?
+        </Button>
+           
+        
         {/* <Link to={'/private'}>Não tem Conta? Cadastre-se</Link> */}
 
 
