@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Button, Modal } from 'antd';
 
 const BACKGROUND_STYLE : {[value:string]: string | object}  = {
   position: 'fixed',
@@ -23,19 +23,18 @@ const MODAL_STYLE : any = {
 }
 
 export default function ForgetPassword({ isOpen, setModalOpen, children } : any) {
-  if (isOpen) {
+
     return (
-      <div style={BACKGROUND_STYLE}>
-        <div style={MODAL_STYLE}>
-          <div style={{ cursor: 'pointer'}} onClick={setModalOpen}>
-            x
-          </div>
-          <div>{children}</div>
-          <button onClick={setModalOpen}>Fechar</button>
+     
+          <div> 
+              <Modal title="Basic Modal" open={isOpen} onOk={setModalOpen} onCancel={setModalOpen}>
+                  <p>Some contents...</p>
+                  <p>Some contents...</p>
+                  <p>Some contents...</p>
+             </Modal>
         </div>
-      </div>
     )
-  }
+  
 
   return null
 }

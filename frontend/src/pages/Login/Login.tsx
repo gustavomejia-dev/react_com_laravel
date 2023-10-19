@@ -60,11 +60,7 @@ function Login() {
 
 }   
 
-    const modal = () => {
-        console.log('oi');
-            setShowModal(true);
-        return;
-    }
+  
   return (
         
       <div className='container align-self-center'>
@@ -106,7 +102,7 @@ function Login() {
         : ''        
         } */}
         <Button style={{textAlign:'center', alignItems:'center'}}  type="primary" onClick={() => setShowModal(true)}>
-            Esqueceu sua Senha ?
+            Esqueceu sua Senha ?  
         </Button>
            
         
