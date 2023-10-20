@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
- Route::post('/forgot-password',[PasswordResetLinkController::class, 'store']);
-//  Route::post('/forgotpassword',[LoginController::class, 'forgotPassword']);
+//  Route::post('/forgot-password',[PasswordResetLinkController::class, 'store']);
+ Route::post('/forgot-password',[LoginController::class, 'forgotPassword']);
  Route::post('/confirmToken',[LoginController::class, 'confirmToken']);
  Route::post('login', [LoginController::class, 'login']);
  Route::middleware(['auth:sanctum'])->group(function (){

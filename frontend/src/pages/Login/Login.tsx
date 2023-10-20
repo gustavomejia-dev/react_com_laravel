@@ -1,5 +1,5 @@
 
-import { DatePicker, Row, Col, Form, Input, Button, message } from 'antd';
+import { DatePicker, Row, Col, Form, Input, Button, message, Space } from 'antd';
 import { useApi } from '../../hooks/useApi';
 import { AuthContext } from '../../context/Auth/AuthContext';
 import React, { useContext, useEffect, useState } from 'react'
@@ -59,8 +59,12 @@ function Login() {
         setPassword(event.target.value);
 
 }   
-
+    const teste = (event : any) => {
+        event.preventDefault()
+        setShowModal(true)
+    }
   
+
   return (
         
       <div className='container align-self-center'>
@@ -74,7 +78,7 @@ function Login() {
             
         }}>
             
-            <Col span={12}>
+            <Col span={10}>
                 <Form name="basic" labelCol={{span:8}} wrapperCol={{span: 16}} onFinish={handleSubmit}>
                     <Form.Item label='Email' name='email'>
                         <Input onChange={handleInputEmail}/>
@@ -91,19 +95,27 @@ function Login() {
                 </Form>
                 <ForgetPassword isOpen={showModal} setModalOpen={() => setShowModal(!showModal)}/>
             </Col>
+            <Space >
+                
+                
+            
+           
+            
+                <Link to={""} style={{textAlign:'center', alignItems:'center'}}  onClick={teste}>
+                        Esqueceu sua Senha ?  
+                </Link>
+            </Space>
+
+            
             
         </Row>
+      
+        
+            
 
-       {/* {showModal  == true ?
-                <div className='align-self-center'>
-                    oiii
-                <button onClick={() => setShowModal(false)}>Fechar</button>
-                </div>
-        : ''        
-        } */}
-        <Button style={{textAlign:'center', alignItems:'center'}}  type="primary" onClick={() => setShowModal(true)}>
-            Esqueceu sua Senha ?  
-        </Button>
+        
+   
+        
            
         
         {/* <Link to={'/private'}>Não tem Conta? Cadastre-se</Link> */}

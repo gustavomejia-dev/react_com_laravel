@@ -1,36 +1,74 @@
-import React from 'react'
-import { Button, Modal } from 'antd';
+import React, { useState } from 'react'
+import { Button, Col, Form, Input, Modal, Row } from 'antd';
+import { useApi } from '../../../hooks/useApi';
 
-const BACKGROUND_STYLE : {[value:string]: string | object}  = {
-  position: 'fixed',
-  top: '0',
-  bottom: '0',
-  left: '0',
-  right: '0',
-  backgroundColor: 'rgb(0,0,0, 0.7)',
-  zIndex: '1000'
-}
 
-const MODAL_STYLE : any = {
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%,-50%)',
-  padding: '150px',
-  backgroundColor: '#fff',
-  borderRadius: '10px',
-  color: 'black'
-}
 
 export default function ForgetPassword({ isOpen, setModalOpen, children } : any) {
+    const [email, setEmail] = useState('');
+    const [code, setCode] = useState('');
+    const [isOpenInputEmail, setIsOpenInputEmail]= useState(false);
+    const api = useApi();
 
+
+    const handleSend = async () => {
+        const forgotPassword = await api.forgotPassword(email);
+        if(forgotPassword.result == 'success'){
+          setIsOpenInputEmail(true);
+          console.log('aquii');
+        }
+        else{
+          console.log('deu ruim')
+        }
+        
+      
+    }
+    const handleEmail = (event : any) => {
+        setEmail(event.target.value);
+    }
+    
+
+    const handleSendCode = async () => {
+        const getCodeForgetPassword = await api.getCodeForgetPassword(code);
+        if(getCodeForgetPassword == 'success'){
+
+        }
+    }
+
+
+    const handleCode = (event : any) => {
+        setCode(event.target.value);
+    }
     return (
      
           <div> 
-              <Modal title="Basic Modal" open={isOpen} onOk={setModalOpen} onCancel={setModalOpen}>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
+              <Modal  title="Mude a sua Senha" okText={"Enviar"} open={isOpen} onOk={isOpenInputEmail ? handleSendCode : handleSend} onCancel={setModalOpen}>
+                
+                  <Row  justify="center" align="middle">
+                        
+                    
+                
+                        <Col span={13}>
+
+
+                                <Input disabled={isOpenInputEmail} name="email" onChange={handleEmail} placeholder="Email"></Input>
+                                <Form labelCol={{span:8}} wrapperCol={{span: 16}}>
+                                    
+                                    <Input placeholder='Codigo' name='token' onChange={handleCode} style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
+                                    
+                                    
+                                    <Input.Password  placeholder='Senha' name='password' onChange={handleCode} style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
+                                    
+                                    
+                                    <Input.Password placeholder='Confirme a Senha' name='confirmPassword' onChange={handleCode} style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
+                                </Form>
+                        </Col>
+
+                </Row>
+               
+                {/* <Input style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
+                <Input style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  /> */}
+                
              </Modal>
         </div>
     )

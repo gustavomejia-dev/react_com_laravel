@@ -58,17 +58,26 @@ class LoginController extends Controller
 
         // delete the current token that was used for the request
         $request->user()->currentAccessToken()->delete();
+        
         return response()->json(['result' => 'success'], 200);
     }
 
 
     public function confirmToken(Request $request){
-        $token = $request->only(['token']);
+       
+        return $request->all();
+        $code = $request->only(['codigo', 'password', 'confirmPassword']);
         
+        if($code['codigo'] == 'K7872K9') {
+            return response()->json(['result' => 'success'], 200);
+        }else{
+            return response()->json(['result' => 'error'], 422);
+        }
 
-        return response()->json(['result' => $token], 200);
+        
     }
     public function forgotPassword(Request $request){
+        
         $email = $request->validate(['email' => 'required|email']);//criar regra para não enviar email, se o email for invalido
         
         
@@ -84,8 +93,10 @@ class LoginController extends Controller
                         ]) ) ;
                     
                     UserForgotPassword::create(['name' => '', 'email' => $email['email'], 'token' => $token]);
+                    
                     return response()->json(['result' => 'success'], 200);
         }catch(Exception $error){
+            
             return response()->json(['result' => 'error'], 200);
         }
         
