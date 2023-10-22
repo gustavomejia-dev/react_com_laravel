@@ -2,9 +2,7 @@
 
 namespace App\Console;
 
-use App\Jobs\CleanCodeForgetPasswordJob;
-use App\Jobs\SendEmailJob;
-use App\Models\UserForgotPassword;
+use App\Jobs\MyFirstJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,11 +13,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // info('sendNotification');
-        // $schedule->job(new SendEmailJob)->everyMinute();
-        $schedule->call(function ()  {
-            UserForgotPassword::where("id", "!=", 0)->delete();
-        })->everyMinute();
+        // $schedule->command('inspire')->hourly();
     }
 
     /**

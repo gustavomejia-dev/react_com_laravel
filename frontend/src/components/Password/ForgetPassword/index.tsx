@@ -7,6 +7,7 @@ import { useApi } from '../../../hooks/useApi';
 export default function ForgetPassword({ isOpen, setModalOpen, children } : any) {
     const [email, setEmail] = useState('');
     const [code, setCode] = useState('');
+    const [password, setPassword] = useState('');
     const [isOpenInputEmail, setIsOpenInputEmail]= useState(false);
     const api = useApi();
 
@@ -29,15 +30,22 @@ export default function ForgetPassword({ isOpen, setModalOpen, children } : any)
     
 
     const handleSendCode = async () => {
-        const getCodeForgetPassword = await api.getCodeForgetPassword(code);
+        console.log(code + password);
+        const getCodeForgetPassword = await api.getCodeForgetPassword(code, password, email);
         if(getCodeForgetPassword == 'success'){
-
+            console.log('aquii');
         }
     }
 
 
     const handleCode = (event : any) => {
+        console.log(event.target.value);
         setCode(event.target.value);
+    }
+
+    const handlePassword = (event : any) => {
+        console.log(event.target.value);
+        setPassword(event.target.value);
     }
     return (
      
@@ -57,10 +65,10 @@ export default function ForgetPassword({ isOpen, setModalOpen, children } : any)
                                     <Input placeholder='Codigo' name='token' onChange={handleCode} style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
                                     
                                     
-                                    <Input.Password  placeholder='Senha' name='password' onChange={handleCode} style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
+                                    <Input.Password  placeholder='Senha' name='password' onChange={handlePassword} style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
                                     
                                     
-                                    <Input.Password placeholder='Confirme a Senha' name='confirmPassword' onChange={handleCode} style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
+                                    <Input.Password placeholder='Confirme a Senha' name='confirmPassword' style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
                                 </Form>
                         </Col>
 

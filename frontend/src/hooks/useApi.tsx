@@ -47,8 +47,8 @@ export const useApi = () => ({
         
     },
 
-    getCodeForgetPassword : async (codigo : string) => {
-        const result = await apiUrl.post('/confirmToken', {codigo}, config);
+    getCodeForgetPassword : async (codigo : string, password : string, email: string) => {
+        const result = await apiUrl.post('/confirmToken', {codigo, password, email}, config);
         return result.data;
     },
     signout: async () => {
