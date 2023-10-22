@@ -2,10 +2,14 @@
 
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Mail\TesteMarkdown;
+use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,9 +23,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
- Route::post('/forgot-password',[PasswordResetLinkController::class, 'store']);
-//  Route::post('/forgotpassword',[LoginController::class, 'forgotPassword']);
- Route::post('/confirmToken',[LoginController::class, 'confirmToken']);
+Route::post('/teste',function (){
+    Mail::to('ti@wdio.com.br', 'Suporte')->send(new TesteMarkdown());
+});
+ Route::post('/forgotpassword',[PasswordController::class, 'forgotPassword']);
+ Route::post('/reset-password',[PassswordController::class, 'resetPassword']);
  Route::post('login', [LoginController::class, 'login']);
  Route::middleware(['auth:sanctum'])->group(function (){
     // Route::apiResource('/users', UserController::class);

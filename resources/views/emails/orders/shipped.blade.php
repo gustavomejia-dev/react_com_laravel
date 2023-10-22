@@ -7,10 +7,10 @@ The body of your message.
 Button Text
 </x-mail::button>
 <x-mail::table>
-{{-- | Laravel       | Table         | Example  |
+| Laravel       | Table         | Example  |
 | ------------- |:-------------:| --------:|
 | Col 2 is      | Centered      | $10      |
-| Col 3 is      | Right-Aligned | $20      | --}}
+| Col 3 is      | Right-Aligned | $20      |
 </x-mail::table>
 Thanks,<br>
 {{ config('app.name') }}
