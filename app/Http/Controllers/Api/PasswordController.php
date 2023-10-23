@@ -2,45 +2,55 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Requests\Api\AuthRequest;
-use App\Mail\MailableResetPassword;
-use App\Models\User;
-use App\Models\UserForgotPassword;
-use Exception;
 
-use Illuminate\Http\Response;
+
+
+use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
+
+use Illuminate\Validation\Rules;
+use App\Mail\MailableResetPassword;
+use App\Models\UserForgotPassword;
+use Illuminate\Support\Str;
+use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 
 class PasswordController extends Controller
 {
-    public function resetPassword(Request $request){
+    public function store(Request $request){
              
-        $data = $request->only(['email', 'codigo', 'password']);
+        $rules = [
+            'codigo' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ];
+
+        $messages = [
+            'email.required|email' => 'Email Invalid',
+            'codigo.required' => 'Token is Required',
+            'password.required' => 'Digite uma senha',
+            'password.confirmed' => 'Senhas incompátiveis'
+        ];
+        $validated = $request->validate($rules, $messages);
         
-        //criar uma form request para validar tudo isso
-        // return response()->json(['result' => $data], 200);
         
-        $UserForResetPassword = User::where('email', $data['email'])->first();
-        
-         //usuario quer resetar a senha?
-        //  $user = UserForgotPassword::where('email', $data['email'])->first();
-         $user = UserForgotPassword::where('token', $data['codigo'])->first();
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'codigo'),
+            function ($user) use ($request) {
+                $user->forceFill([
+                    'password' => Hash::make($request->password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+        return response()->json(['result', 'oii']);
+             
          
-         if($user['token'] == $data['codigo']){
-            // return $data['password'];
-             $UserForResetPassword->forceFill([
-                 'password' => Hash::make($data['password'])
-             ]);
-             $UserForResetPassword->save();
-             $UserForResetPassword->tokens()->delete();
-             return response()->json(['result' => $UserForResetPassword]);
-         }else{
-             return response()->json(['result' => 'Incorrect Token'], 404);
-         }
         
         
         

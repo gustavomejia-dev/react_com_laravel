@@ -26,8 +26,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/teste',function (){
     Mail::to('ti@wdio.com.br', 'Suporte')->send(new TesteMarkdown());
 });
- Route::post('/forgot-password',[PasswordController::class, 'forgotPassword']);
- Route::post('/confirmToken',[PasswordController::class, 'resetPassword']);
+ Route::post('/password/forgot-password',[PasswordController::class, 'forgotPassword']);
+ Route::post('/password/store',[NewPasswordController::class, 'store']);
  Route::post('login', [LoginController::class, 'login']);
  Route::middleware(['auth:sanctum'])->group(function (){
     // Route::apiResource('/users', UserController::class);

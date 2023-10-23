@@ -8,6 +8,7 @@ export default function ForgetPassword({ isOpen, setModalOpen, children } : any)
     const [email, setEmail] = useState('');
     const [code, setCode] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmedPassword, setConfirmedPassword] = useState('');
     const [isOpenInputEmail, setIsOpenInputEmail]= useState(false);
     const api = useApi();
 
@@ -31,7 +32,7 @@ export default function ForgetPassword({ isOpen, setModalOpen, children } : any)
 
     const handleSendCode = async () => {
         console.log(code + password);
-        const getCodeForgetPassword = await api.getCodeForgetPassword(code, password, email);
+        const getCodeForgetPassword = await api.getCodeForgetPassword(code, password, email, confirmedPassword);
         if(getCodeForgetPassword == 'success'){
             console.log('aquii');
         }
@@ -46,6 +47,11 @@ export default function ForgetPassword({ isOpen, setModalOpen, children } : any)
     const handlePassword = (event : any) => {
         console.log(event.target.value);
         setPassword(event.target.value);
+    }
+
+    const handleConfirmPassword = (event : any) => {
+        console.log(event.target.value);
+        setConfirmedPassword(event.target.value);
     }
     return (
      
@@ -68,7 +74,7 @@ export default function ForgetPassword({ isOpen, setModalOpen, children } : any)
                                     <Input.Password  placeholder='Senha' name='password' onChange={handlePassword} style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
                                     
                                     
-                                    <Input.Password placeholder='Confirme a Senha' name='confirmPassword' style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
+                                    <Input.Password placeholder='Confirme a Senha' onChange={handleConfirmPassword} name='confirmPassword' style={{display: isOpenInputEmail ? 'block' : 'none', marginTop: '1rem' }}  />
                                 </Form>
                         </Col>
 
