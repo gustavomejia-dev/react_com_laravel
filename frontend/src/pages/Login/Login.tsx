@@ -1,5 +1,5 @@
 
-import { DatePicker, Row, Col, Form, Input, Button, message, Space } from 'antd';
+import { DatePicker, Row, Col, Form, Input, Button, message, Space, Checkbox } from 'antd';
 import { useApi } from '../../hooks/useApi';
 import { AuthContext } from '../../context/Auth/AuthContext';
 import React, { useContext, useEffect, useState } from 'react'
@@ -8,6 +8,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Notification } from '../../components/Notification';
 import Private from '../Private/Private';
 import ForgetPassword from '../../components/Password/ForgetPassword';
+import Item from 'antd/es/list/Item';
 function Login() {
     
     // const [theme, toggleTheme] = useContext(AuthContext);
@@ -88,24 +89,23 @@ function Login() {
 
                     </Form.Item>
     
-                    <Form.Item wrapperCol={{offset:8, span:16}}>
+                    <Form.Item wrapperCol={{offset:8, span:16}} >
                         <Button  type='primary' htmlType='submit'>Logar</Button>
+                        <Checkbox style={{paddingLeft: '1rem'}}>Remember me</Checkbox>
                     </Form.Item>
-                    
+                   
+                     <Form.Item wrapperCol={{offset:8, span:16}}>
+                         <Link to={""} style={{textAlign:'center', alignItems:'center'}}  onClick={teste}>
+                                Esqueceu sua Senha ?  
+                         </Link>
+                    </Form.Item>
+                            
+                
+                   
                 </Form>
                 <ForgetPassword isOpen={showModal} setModalOpen={() => setShowModal(!showModal)}/>
             </Col>
-            <Space >
-                
-                
-            
-           
-            
-                <Link to={""} style={{textAlign:'center', alignItems:'center'}}  onClick={teste}>
-                        Esqueceu sua Senha ?  
-                </Link>
-            </Space>
-
+          
             
             
         </Row>
