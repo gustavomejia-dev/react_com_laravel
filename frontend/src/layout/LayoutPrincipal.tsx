@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { getDataUser } from '../utils/dataUser';
 import { Ul } from '../components/Header/HeaderList';
 import { config } from '../hooks/useApi';
@@ -36,7 +36,7 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
+  getItem('Teste', '2', <DesktopOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
     getItem('Tom', '3'),
     getItem('Bill', '4'),
@@ -52,7 +52,25 @@ function LayoutPrincipal() {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+
+            <Menu.Item key="1">
+                    <PieChartOutlined />
+                    <span>Deshboard</span>
+                    <Link to="/"/>
+            </Menu.Item>
+
+            <Menu.Item key="2">
+                    <PieChartOutlined />
+                    <span>Usuarios</span>
+                    <Link to="private/teste"/>
+            </Menu.Item>
+            <Menu.Item key="3">
+                    <PieChartOutlined />
+                    <span>Produtos</span>
+                    <Link to="private/produtos"/>
+            </Menu.Item>
+        </Menu>
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: 'white' }} >
@@ -64,6 +82,7 @@ function LayoutPrincipal() {
             {/* <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
           </Breadcrumb>
           <div style={{ padding: 24, minHeight: 360, background:'white' }}>
+             {/* AQUI CARREGA O COMPONENTE DINAMICAMENTE */}
             <Outlet/>
           </div>
         </Content>

@@ -28,7 +28,14 @@ const router = createBrowserRouter (
                                     path: '/private',
                                     element: <LayoutPrincipal/>,
                                     children: [
-                                        
+                                            {
+                                                path:'private/usuario', 
+                                                element:<h1>Usuarios</h1>,
+                                            },
+                                            {
+                                                path:'private/teste', 
+                                                element:<h1>teste</h1>
+                                            },    
                                     ]
                                     }
                                     
