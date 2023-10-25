@@ -12,6 +12,6 @@ class UserForgotPassword extends Model
     protected $fillable = [
         'name',
         'email',
-        'token',
+        'codigo',
     ];
 }

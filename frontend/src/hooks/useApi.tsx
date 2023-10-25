@@ -1,15 +1,16 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, HttpStatusCode } from 'axios';
 import axios from 'axios';
 import { getTokenLogin } from '../utils/tokenLogin';
+import { ExceptionStatusType } from 'antd/es/result';
 export const apiUrl = axios.create({
     baseURL : 'http://fastfood.sis/api',
 })
 export const config: AxiosRequestConfig = {
     
     timeout: 60 * 1000,
-    // validateStatus: (status) =>{
-    //     return status < 500;
-    // },
+    validateStatus: (status) =>{
+        return status < 500;
+    },
     headers: {
         Authorization: 'Bearer ' + getTokenLogin(),
         
@@ -48,8 +49,23 @@ export const useApi = () => ({
     },
 
     getCodeForgetPassword : async (codigo : string, password : string, email: string, password_confirmation: string) => {
-        const result = await apiUrl.post('/password/store', {codigo, password, email, password_confirmation}, config);
-        return result.data;
+        try{
+            const result = await apiUrl.post('/password/store', {codigo, password, email, password_confirmation}, config);
+          
+            const data = result.data;
+            const status = result.status;
+            if (status == 200) {
+                return { data, status};
+              } else {
+                throw { message: data, status : status };
+              }
+         
+            
+        // return result.data;
+        }catch(error : any) {
+            
+            return { status: error.status }
+        }
     },
     signout: async () => {
         const result = await apiUrl.post('logout',{}, config);
