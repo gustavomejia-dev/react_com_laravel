@@ -4,6 +4,7 @@ import LayoutPrincipal from "./layout/LayoutPrincipal";
 import Home from "./pages/Home/Home";
 import { RequireAuth } from "./context/Auth/RequireAuth";
 import Private from "./pages/Private/Private";
+import { Users } from "./components/Sidebar/Users";
 
 
 const router = createBrowserRouter (
@@ -30,11 +31,16 @@ const router = createBrowserRouter (
                                     children: [
                                             {
                                                 path:'private/usuario', 
-                                                element:<h1>Usuarios</h1>,
+                                                element:<Users/>,
                                             },
                                             {
                                                 path:'private/teste', 
                                                 element:<h1>teste</h1>
+                                            },    
+
+                                            {
+                                                path:'private/produtos', 
+                                                element:<h1>produtos</h1>
                                             },    
                                     ]
                                     }

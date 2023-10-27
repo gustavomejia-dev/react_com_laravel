@@ -56,14 +56,14 @@ function LayoutPrincipal() {
 
             <Menu.Item key="1">
                     <PieChartOutlined />
-                    <span>Deshboard</span>
-                    <Link to="/"/>
+                    <span>Dashboard</span>
+                    <Link to="/private"/>
             </Menu.Item>
 
             <Menu.Item key="2">
                     <PieChartOutlined />
                     <span>Usuarios</span>
-                    <Link to="private/teste"/>
+                    <Link to="private/usuario"/>
             </Menu.Item>
             <Menu.Item key="3">
                     <PieChartOutlined />
@@ -86,7 +86,7 @@ function LayoutPrincipal() {
             <Outlet/>
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center' }}>Gustavo LTDA ©2023 Created by Mejia</Footer>
       </Layout>
     </Layout>
   )

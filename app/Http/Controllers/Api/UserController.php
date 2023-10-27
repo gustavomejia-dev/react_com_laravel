@@ -8,13 +8,21 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
 
     /* SEMPRE UTILIZAR RESOURCES PARA RETORNO DE DADOS DE API */
-    public function index(){
+
+
+    public function list(Request $request){
+        $user = User::paginate(10);
+        return UserResource::collection($user);
+    }
+
+    public function index(): ResourceCollection{
         $users = User::paginate();
         return UserResource::collection($users);// traz uma collection com outra dentro
     }
