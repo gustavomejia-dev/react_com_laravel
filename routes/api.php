@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/teste',function (){
     Mail::to('ti@wdio.com.br', 'Suporte')->send(new TesteMarkdown());
 });
-
+Route::apiResource('/users', UserController::class);
  Route::post('/password/forgot-password',[PasswordController::class, 'forgotPassword']);
  Route::post('/password/store',[PasswordController::class, 'store']);
  Route::post('login', [LoginController::class, 'login']);
@@ -35,7 +35,7 @@ Route::post('/teste',function (){
     Route::post('logout', [LoginController::class, 'logout']);
     Route::post('/users/list', [UserController::class, 'list']);
     Route::post('register', [RegisterController::class, 'register']);
-    Route::apiResource('/users', UserController::class);
+    
  });
  
 

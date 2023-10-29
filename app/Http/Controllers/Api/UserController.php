@@ -18,9 +18,23 @@ class UserController extends Controller
 
 
     public function list(Request $request){
-        $user = User::paginate(10);
-        return UserResource::collection($user);
-    }
+        $onlyReq= $request->only('name', 'email');
+           
+            $users = User::select('id', 'name',  'email')
+                            ->where('name', 'LIKE' , "{$onlyReq['name']}%")
+                            ->where('email' , 'LIKE' , "{$onlyReq['email']}%")->get();
+                           
+            if(count($users) > 0){
+               return [
+                    'qtd' => count($users),
+                    'data' => $users
+                ];
+            }     
+            
+            return response()->json(['result' => false], 200);
+            
+        }   
+    
 
     public function index(): ResourceCollection{
         $users = User::paginate();

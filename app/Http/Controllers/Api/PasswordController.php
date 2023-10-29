@@ -81,7 +81,7 @@ class PasswordController extends Controller
         ]);
 
     }
-    public function forgotPassword(Request $request) : JsonResponse{ 
+    public function forgotPassword(Request $request) { 
         $email = $request->validate(['email' => 'required|email']);//criar regra para não enviar email, se o email for invalido
         
         
@@ -101,7 +101,7 @@ class PasswordController extends Controller
                     
                     return response()->json(['result' => 'success'], 200);
         }catch(Exception $error){
-           
+           return $error;
             return response()->json(['result' => 'Fatal Error'], 500);
         }
         

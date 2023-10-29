@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('email');
-            $table->string('token');
+            $table->string('codigo');
             $table->timestamps();
         });
     }
