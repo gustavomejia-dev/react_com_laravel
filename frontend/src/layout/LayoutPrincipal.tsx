@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   DesktopOutlined,
   FileOutlined,
@@ -34,25 +34,36 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Teste', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <FileOutlined />),
-];
+// const items: MenuItem[] = [
+//   getItem('Option 1', '1', <PieChartOutlined />),
+//   getItem('Teste', '2', <DesktopOutlined />),
+//   getItem('User', 'sub1', <UserOutlined />, [
+//     getItem('Tom', '3'),
+//     getItem('Bill', '4'),
+//     getItem('Alex', '5'),
+//   ]),
+//   getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+//   getItem('Files', '9', <FileOutlined />),
+// ];
 
 
 function LayoutPrincipal() {
+
+  const [keyMenu, setKeyMenu] = useState<string | any>();
+  
+  useEffect(() => {
+ 
+    console.log(typeof(localStorage.getItem('keyMenu')));
+    return () => {
+      localStorage.setItem('keyMenu', keyMenu);
+      
+    }
+  }, [keyMenu])
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+        <Menu theme="dark" defaultSelectedKeys={keyMenu} mode="inline" onClick={({key})=> setKeyMenu(key)}>
 
             <Menu.Item key="1">
                     <PieChartOutlined />

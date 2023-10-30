@@ -18,19 +18,25 @@ class UserController extends Controller
 
 
     public function list(Request $request){
-        $onlyReq= $request->only('name', 'email');
-           
-            $users = User::select('id', 'name',  'email')
-                            ->where('name', 'LIKE' , "{$onlyReq['name']}%")
-                            ->where('email' , 'LIKE' , "{$onlyReq['email']}%")->get();
-                           
-            if(count($users) > 0){
-               return [
-                    'qtd' => count($users),
-                    'data' => $users
-                ];
-            }     
+        $onlyReq = $request->only('name', 'email');
             
+            if($onlyReq['name'] != null || $onlyReq['email'] != null){
+                
+                    $users = User::select('id',  'name' , 'email', 'created_at')
+                                    ->where('name', 'LIKE' , "{$onlyReq['name']}%")
+                                    ->where('email' , 'LIKE' , "{$onlyReq['email']}%")->get();
+
+
+
+                               
+                    if(count($users) > 0){
+
+                       return response()->json([
+                         'qtd' => count($users),
+                         'data' => UserResource::collection($users)
+                    ], 200);
+                 }     
+        }    
             return response()->json(['result' => false], 200);
             
         }   

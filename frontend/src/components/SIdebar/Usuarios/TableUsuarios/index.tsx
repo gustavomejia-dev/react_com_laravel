@@ -65,11 +65,11 @@ export const TableUsuarios = () => {
   const listUsers = async () => {
    
     const result = await apiUsers.listUsers(filter.searchEmail, filter.searchNome);
-    const users = [];
+    const users: any = [];
     // setData(result.data);
     console.log(result);
     for (let i = 0; i < result.qtd; i++) {
-        
+
             users.push({
                     key: result.data[i].identify,
                     name: result.data[i].name,
