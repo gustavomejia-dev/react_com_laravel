@@ -25,11 +25,11 @@ export const config: AxiosRequestConfig = {
 //422 é erro de email invalido
 //404 as informações estão incorretas
 export const useApi = () => ({
-    signin: async(email: string, password: string) =>{
+    signin: async(email: string, password: string, remember_token: string) =>{
         
         // const result = await axios.post('https://reqres.in/api/login', {email, password});
         
-        const result = await apiUrl.post('login', {email, password}, config)
+        const result = await apiUrl.post('login', {email, password, remember_token}, config)
         .then((response) =>{
             
             return response.data;

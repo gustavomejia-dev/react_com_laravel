@@ -24,17 +24,18 @@ class AuthRequest extends FormRequest
         return [
             'email' => 'required|max:255|email',
             'password' => 'required|max:255',
+            'remember_token' => 'boolean|required'
             // 'body' => 'required',
             // 'email' => ['required|email|max:255'],
             // 'password' => ['required|max:255'],
             // 'device_name' => ['required|max:255'],    
         ];
     }
-
+    
     public function messages(){
 
         return[
-         
+            
                 'email.required' => 'A email is required',
                 'password.required' => 'A password is required',
             

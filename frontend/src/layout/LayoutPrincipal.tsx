@@ -48,22 +48,28 @@ function getItem(
 
 
 function LayoutPrincipal() {
-
+  /*  SALVA o Estado do Menu*/
   const [keyMenu, setKeyMenu] = useState<string | any>();
-  
-  useEffect(() => {
- 
-    console.log(typeof(localStorage.getItem('keyMenu')));
-    return () => {
-      localStorage.setItem('keyMenu', keyMenu);
-      
+  const setStateMenu = (key : string): void => {
+      // const stateMenu : Array<string> = new Array(key);
+      localStorage.setItem('keyMenu', key);
+  }
+  const getStateMenu = (): Array<string>  => {
+    const key = localStorage.getItem('keyMenu');
+    if(key != undefined && key != null){
+      const keyArray = Array(key);
+      return keyArray;
     }
-  }, [keyMenu])
+      const arr  =  ["1"];
+      return arr;
+    
+  }
+  
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={keyMenu} mode="inline" onClick={({key})=> setKeyMenu(key)}>
+        <Menu theme="dark" defaultSelectedKeys = {getStateMenu()} mode="inline" onClick={({key})=> setStateMenu(key)}>
 
             <Menu.Item key="1">
                     <PieChartOutlined />

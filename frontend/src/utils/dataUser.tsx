@@ -12,7 +12,7 @@ export const getDataUser = () => {
    if(userData != null){
     
     // console.log('user '+ userData);
-    return JSON.parse(userData);
+        return JSON.parse(userData);
     
    }
     return false;
@@ -22,4 +22,8 @@ export const removeDataUser = () => {
     localStorage.removeItem("data");
     return true;
 
+}
+
+export const setRememberToken = (token :string) => {
+    console.log('remember token: ', setRememberToken);
 }

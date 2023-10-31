@@ -25,7 +25,7 @@ class LoginController extends Controller
         
         $validated = $request->validated();
         // return response()->json(gettype($validated), 200);
-        
+        return $validated;
         $user = User::where('email', $validated['email'])->first();
         
         if(!$user || !Hash::check($validated['password'], $user->password)){

@@ -15,8 +15,9 @@ function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState<any>('');  
     const [password, setPassword] = useState<any>('');
-    const [logged, signin, token] = useContext(AuthContext);
+    const [logged, signin, token, remember_token] = useContext(AuthContext);
     const [showModal, setShowModal] = useState(false);
+    const [rememberToken, setRememberToken] = useState();
     // const [message, setMessage] = useState('');
     useEffect(()=>{
         //se já estiver logado ele simplesmente já direciona para a rota privada
@@ -31,7 +32,7 @@ function Login() {
     async function handleSubmit(){
 
 
-        const result = await signin(email, password);
+        const result = await signin(email, password, rememberToken);
         if(result){
            
             console.log('logado');
@@ -60,11 +61,16 @@ function Login() {
         setPassword(event.target.value);
 
 }   
+
     const teste = (event : any) => {
         event.preventDefault()
         setShowModal(true)
     }
-  
+    
+    const handleRememberCheckbox = (event: any) => {
+        setRememberToken(event.target.checked);
+        console.log(event.target.checked);
+    }
 
   return (
         
@@ -91,7 +97,7 @@ function Login() {
     
                     <Form.Item wrapperCol={{offset:8, span:16}} >
                         <Button  type='primary' htmlType='submit'>Logar</Button>
-                        <Checkbox style={{paddingLeft: '1rem'}}>Remember me</Checkbox>
+                        <Checkbox onChange={handleRememberCheckbox} name='remember' style={{paddingLeft: '1rem'}}>Remember me</Checkbox>
                     </Form.Item>
                    
                      <Form.Item wrapperCol={{offset:8, span:16}}>

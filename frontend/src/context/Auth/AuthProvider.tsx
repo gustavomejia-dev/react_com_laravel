@@ -20,9 +20,9 @@ export const AuthProvider = ({children}: childrenType) => {
         setTheme(theme  === 'light' ? 'dark' : 'light');
     }
 
-    const signin =  async (email: string, password :string) => {
+    const signin =  async (email: string, password :string, remember_token: string) => {
         
-        const auth = await api.signin(email, password);
+        const auth = await api.signin(email, password, remember_token);
         console.log(typeof(auth));
         if(auth  > 400){
             return false;
@@ -31,8 +31,8 @@ export const AuthProvider = ({children}: childrenType) => {
         else{
             
             setIsLogged(auth.result.user);//dados do usuario
-            setTokenLogin(auth.result.token);//token 
-            setDataUser(auth.result.user);
+            setTokenLogin(auth.result.token);//"../../utils/tokenLogin";
+            setDataUser(auth.result.user);//
             return auth.result.user;
         }
         
