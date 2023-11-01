@@ -24,6 +24,11 @@ export const removeDataUser = () => {
 
 }
 
-export const setRememberToken = (token :string) => {
-    console.log('remember token: ', setRememberToken);
+export const getRememberToken = () => {
+    const data = localStorage.getItem('data');
+    if(data != null){
+        const rememberToken = JSON.parse(data);
+        const {remember_token} = rememberToken;
+        return remember_token;
+    }    
 }

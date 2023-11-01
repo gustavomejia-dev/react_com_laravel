@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { AuthContext } from "./AuthContext";
 import { apiUrl, useApi } from "../../hooks/useApi";
 import { setTokenLogin, getTokenLogin, removeTokenLogin } from "../../utils/tokenLogin";
-import { removeDataUser, setDataUser } from "../../utils/dataUser";
+import { removeDataUser, setDataUser, getRememberToken } from "../../utils/dataUser";
 
 type childrenType = {
     children: JSX.Element
@@ -14,6 +14,7 @@ export const AuthProvider = ({children}: childrenType) => {
     const [theme, setTheme] = useState('light');
     const [isLogged, setIsLogged] = useState<any>();
     const [isLogout, setIsLogout] = useState();
+    
     // const teste:string = 'testando';
    
     const toggleTheme = () => {
@@ -33,6 +34,8 @@ export const AuthProvider = ({children}: childrenType) => {
             setIsLogged(auth.result.user);//dados do usuario
             setTokenLogin(auth.result.token);//"../../utils/tokenLogin";
             setDataUser(auth.result.user);//
+            
+            
             return auth.result.user;
         }
         
@@ -56,10 +59,11 @@ export const AuthProvider = ({children}: childrenType) => {
         // console.log('deslog');
        
     }
+    const rememberToken = getRememberToken();
     const token = getTokenLogin();//obtem o token
     
     return(
-        <AuthContext.Provider value={[isLogged, signin, token, signout]}>
+        <AuthContext.Provider value={[isLogged, signin, token, signout, rememberToken]}>
             {children}
         </AuthContext.Provider>
 
