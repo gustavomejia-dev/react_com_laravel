@@ -25,15 +25,22 @@ class LoginController extends Controller
         
         $validated = $request->validated();
         // return response()->json(gettype($validated), 200);
-        return $validated;
-        $user = User::where('email', $validated['email'])->first();
         
+        
+        $user = User::where('email', $validated['email'])->first();
+        //caso o checkbox remember me esteja selecionado,  cai nesse if
+        if($validated['remember_token']){
+            //adicionando o remember token e acrescentando no final do token as duas primeiras letras do nome do usuario;
+            $user->remember_token = $user->makeVisible('remember_token')->remember_token . substr($user->name, 0, 2);
+                 
+        }
+        //verificando as credenciais fornececidas pelo usuario
         if(!$user || !Hash::check($validated['password'], $user->password)){
             return response()->json(['result' =>'Invalid Credentials'], 404);
         }
         
         $user->tokens()->delete();//desloga de todos os outros dispositivos logados
-        
+        //token de autenticação
         $token = $user->createToken('token_name')->plainTextToken;
         
         // return response()->json($token);

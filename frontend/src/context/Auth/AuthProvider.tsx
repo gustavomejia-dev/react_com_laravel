@@ -23,7 +23,7 @@ export const AuthProvider = ({children}: childrenType) => {
     const signin =  async (email: string, password :string, remember_token: string) => {
         
         const auth = await api.signin(email, password, remember_token);
-        console.log(typeof(auth));
+       
         if(auth  > 400){
             return false;
         

@@ -8,7 +8,7 @@ export const RequireAuth = () => {
     // console.log(isLogged);
     // console.log(localStorage.getItem('myKey'));
    
-    
+    console.log(token);
 
     if(token){
         return  <Outlet/>
