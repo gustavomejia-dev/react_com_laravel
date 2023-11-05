@@ -15,13 +15,14 @@ function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState<any>('');  
     const [password, setPassword] = useState<any>('');
-    const [logged, signin, token, remember_token] = useContext(AuthContext);
+    const [logged, signin, token, signout, remember_token] = useContext(AuthContext);
     const [showModal, setShowModal] = useState(false);
     const [rememberToken, setRememberToken] = useState();
     // const [message, setMessage] = useState('');
     useEffect(()=>{
         //se já estiver logado ele simplesmente já direciona para a rota privada
-        if(token){
+        // console.log('login', remember_token);
+        if(token && remember_token){
             navigate('/private');
             
             return;

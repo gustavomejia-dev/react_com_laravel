@@ -24,7 +24,7 @@ export const AuthProvider = ({children}: childrenType) => {
     const signin =  async (email: string, password :string, remember_token: string) => {
         
         const auth = await api.signin(email, password, remember_token);
-       
+        console.table(auth);
         if(auth  > 400){
             return false;
         
@@ -60,6 +60,7 @@ export const AuthProvider = ({children}: childrenType) => {
        
     }
     const rememberToken = getRememberToken();
+    console.log('remembertoken', rememberToken);
     const token = getTokenLogin();//obtem o token
     
     return(
