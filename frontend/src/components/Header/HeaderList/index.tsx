@@ -5,7 +5,7 @@ import { Spin } from 'antd';
 import { AuthContext } from '../../../context/Auth/AuthContext';
 import { config } from '../../../hooks/useApi';
 import { removeTokenLogin } from '../../../utils/tokenLogin';
-import { removeDataUser } from '../../../utils/dataUser';
+import { removeDataUser, removeRememberToken } from '../../../utils/dataUser';
 export const Ul = () => {
 
 
@@ -21,11 +21,11 @@ export const Ul = () => {
      
      
       if(isLogout){
-        
-        window.location.reload();
-        
-        setLoading(false);
-        return
+          setLoading(false);
+          removeDataUser();
+          removeTokenLogin();
+          removeRememberToken();
+          navigate('/login');
       }
       
       

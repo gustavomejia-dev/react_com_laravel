@@ -15,18 +15,21 @@ function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState<any>('');  
     const [password, setPassword] = useState<any>('');
-    const [logged, signin, token, signout, remember_token] = useContext(AuthContext);
+    const [logged, signin, token, signout, rememberToken, setRememberToken] = useContext(AuthContext);
     const [showModal, setShowModal] = useState(false);
-    const [rememberToken, setRememberToken] = useState();
-    // const [message, setMessage] = useState('');
+    const remember_token = localStorage.getItem('ID');
+   
     useEffect(()=>{
         //se já estiver logado ele simplesmente já direciona para a rota privada
-        // console.log('login', remember_token);
-        if(token && remember_token){
+        // console.lo  g('login', remember_token);
+        
+        if(token && remember_token != ''){
             navigate('/private');
-            
-            return;
+            console.log('LOGADO');
+            return ;
         }
+        return () => {console.log('unmount')}
+        
     },[]);
     
  
@@ -35,14 +38,16 @@ function Login() {
 
         const result = await signin(email, password, rememberToken);
         if(result){
-           
-            console.log('logado');
+            
+            // console.log('logado');
+            
             navigate('/private');
             window.location.reload();
+            
             return true;
         }else{
             message.error('Email ou senha incorretos');
-            console.log('deslogado');
+            
             return false;
             
         }
@@ -69,8 +74,9 @@ function Login() {
     }
     
     const handleRememberCheckbox = (event: any) => {
-        setRememberToken(event.target.checked);
-        console.log(event.target.checked);
+        
+        setRememberToken(event.target.checked);//vem do Provider
+        // console.log(rememberToken);
     }
 
   return (

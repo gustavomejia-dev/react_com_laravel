@@ -30,7 +30,7 @@ export const useApi = () => ({
         // const result = await axios.post('https://reqres.in/api/login', {email, password});
         
         const result = await apiUrl.post('login', {email, password, remember_token}, config)
-        .then((response) =>{
+        .then((response) => {
             
             return response.data;
         })
@@ -69,7 +69,7 @@ export const useApi = () => ({
     },
     signout: async () => {
         const result = await apiUrl.post('logout',{}, config);
-        
+        console.log(result);
         return true;
     },
 
