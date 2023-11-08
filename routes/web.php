@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Teste;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Teste\TesteController;
 use App\Jobs\SendEmailJob;
 
 /*
@@ -21,6 +22,8 @@ Route::get('/testandoo', function () {
     SendEmailJob::dispatch();
     return 'Enviou';
 });
+
+Route::get('/channel', [TesteController::class,'index']);
 Route::get('/', function () {
     return view('welcome');
 });
