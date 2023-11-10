@@ -14,7 +14,7 @@ export const AuthProvider = ({children}: childrenType) => {
     const [theme, setTheme] = useState('light');
     const [isLogged, setIsLogged] = useState<any>();
     const [isLogout, setIsLogout] = useState();
-    
+    const [rememberToken, setRememberToken] = useState(false);
     // const teste:string = 'testando';
    
     const toggleTheme = () => {
@@ -24,17 +24,23 @@ export const AuthProvider = ({children}: childrenType) => {
     const signin =  async (email: string, password :string, remember_token: string) => {
         
         const auth = await api.signin(email, password, remember_token);
-        console.table(auth);
-        if(auth  > 400){
+        
+        if(auth  > 400){//verificando se a request de login deu certo
             return false;
         
         }
         else{
             
             setIsLogged(auth.result.user);//dados do usuario
-            setTokenLogin(auth.result.token);//"../../utils/tokenLogin";
-            setDataUser(auth.result.user);//
+            setTokenLogin(auth.result.token, rememberToken);//"../../utils/tokenLogin";
             
+            setDataUser(auth.result.user, rememberToken);//
+            let data = localStorage.getItem('data');
+            if(data != null){
+                const {remember_token} = JSON.parse(data);
+
+                localStorage.setItem('ID', remember_token);
+            }
             
             return auth.result.user;
         }
@@ -59,12 +65,12 @@ export const AuthProvider = ({children}: childrenType) => {
         // console.log('deslog');
        
     }
-    const rememberToken = getRememberToken();
-    console.log('remembertoken', rememberToken);
-    const token = getTokenLogin();//obtem o token
+    
+    
+    var token = ''
     
     return(
-        <AuthContext.Provider value={[isLogged, signin, token, signout, rememberToken]}>
+        <AuthContext.Provider value={[isLogged, signin, token, signout, rememberToken, setRememberToken]}>
             {children}
         </AuthContext.Provider>
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Teste;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Teste\TesteController;
 use App\Jobs\SendEmailJob;
 
 /*

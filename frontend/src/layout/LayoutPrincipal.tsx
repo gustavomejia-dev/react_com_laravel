@@ -48,6 +48,9 @@ function getItem(
 
 
 function LayoutPrincipal() {
+  
+
+  
   /*  SALVA o Estado do Menu*/
   const [keyMenu, setKeyMenu] = useState<string | any>();
   const setStateMenu = (key : string): void => {
@@ -64,7 +67,7 @@ function LayoutPrincipal() {
       return arr;
     
   }
-  
+ 
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider>
