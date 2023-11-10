@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\testWebSocket;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Teste;
@@ -21,10 +22,18 @@ Route::get('/testandoo', function () {
     SendEmailJob::dispatch();
     return 'Enviou';
 });
+Route::get('websocket/{msg}', function ($msg){
+    // die($msg);
+
+    
+    broadcast(new testWebSocket($msg));
+    
+});
 Route::get('/', function () {
-    return view('welcome');
+    return view('teste');
 });
 Route::get('/teste', [Teste::class, 'toEmail']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
