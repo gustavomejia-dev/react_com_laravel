@@ -9,8 +9,11 @@ import { Notification } from '../../components/Notification';
 import Private from '../Private/Private';
 import ForgetPassword from '../../components/Password/ForgetPassword';
 import Item from 'antd/es/list/Item';
+import useWebSocket from 'react-use-websocket';
+import '../../hooks/teste'
+import { echo } from '../../hooks/teste';
 function Login() {
-    
+   
     // const [theme, toggleTheme] = useContext(AuthContext);
     const navigate = useNavigate();
     const [email, setEmail] = useState<any>('');  
@@ -18,11 +21,32 @@ function Login() {
     const [logged, signin, token, signout, rememberToken, setRememberToken] = useContext(AuthContext);
     const [showModal, setShowModal] = useState(false);
     const remember_token = localStorage.getItem('ID');
-   
+    // const testee = 'testeeeeeee';
+    // const {lastJsonMessage} = useWebSocket(`wss://fastfood.sis/api/websocket/${testee}`,{ 
+    //     onOpen: () => console.log('deu certo'),
+    //     onError: (err) =>  console.log(err),
+    //     shouldReconnect: () => true,
+    //     reconnectInterval: 3000,
+    //     onMessage: () => {
+    //         if(lastJsonMessage){
+    //             console.log(lastJsonMessage);
+    //         }
+    //     }
+    // });
     useEffect(()=>{
         //se já estiver logado ele simplesmente já direciona para a rota privada
         // console.lo  g('login', remember_token);
+        echo.channel('public-channel')
+
+        // Listen for the event called "button.clicked"
+        .listen('.SendMessageWebsocketEvent', (e: any) => {
+            
+            // Display the "message" in an alert box
+            alert(e.message);
+            console.log('oi');
+        });
         
+    
         if(token && remember_token != ''){
             navigate('/private');
             console.log('LOGADO');

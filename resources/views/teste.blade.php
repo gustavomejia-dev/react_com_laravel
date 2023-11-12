@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="module"></script>
+    @csrf
+      
     @vite('resources/js/app.js')
     <title>WebsocketTeste</title>
 </head>
@@ -13,13 +16,20 @@
 
     </div>
 </body>
+
 <script>
-    window.onload = () => {
+    window.addEventListener('load',  () =>{
         
-        Echo.channel('orderStatus')
-            .listen('testWebSocket', (e) => {
-                console.log(e);
-            });
-    }
-</script>    
+
+   Echo.channel('public-channel')
+
+// Listen for the event called "button.clicked"
+.listen('SendMessageWebsocketEvent', (e) => {
+
+    // Display the "message" in an alert box
+    alert(e.message);
+});
+    })
+</script>
+    
 </html>

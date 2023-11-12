@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\SendMessageWebSocketEvent;
 use App\Events\testWebSocket;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -26,9 +27,13 @@ Route::get('/testandoo', function () {
 Route::get('websocket/{msg}', function ($msg){
     // die($msg);
 
+    broadcast(new SendMessageWebSocketEvent($msg));
+   
+    return "safe";
     
-    broadcast(new testWebSocket($msg));
-    
+});
+Route::get("milagre", function(){
+    return view("milagre");
 });
 Route::get('/', function () {
     return view('teste');

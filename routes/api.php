@@ -1,5 +1,6 @@
  <?php
 
+use App\Events\SendMessageWebSocketEvent;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PasswordController;
@@ -23,6 +24,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::get('websocket/{msg}', function ($msg){
+    // die($msg);
+
+    broadcast(new SendMessageWebSocketEvent($msg));
+   
+    // return "safe";
+    
+});
 Route::post('/teste',function (){
     Mail::to('ti@wdio.com.br', 'Suporte')->send(new TesteMarkdown());
 });
