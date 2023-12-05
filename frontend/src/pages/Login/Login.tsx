@@ -10,8 +10,8 @@ import Private from '../Private/Private';
 import ForgetPassword from '../../components/Password/ForgetPassword';
 import Item from 'antd/es/list/Item';
 import useWebSocket from 'react-use-websocket';
-import '../../hooks/teste'
-import { echo } from '../../hooks/teste';
+import '../../hooks/websocket'
+import { echo } from '../../hooks/websocket';
 function Login() {
    
     // const [theme, toggleTheme] = useContext(AuthContext);
@@ -42,7 +42,7 @@ function Login() {
         .listen('.SendMessageWebsocketEvent', (e: any) => {
             
             // Display the "message" in an alert box
-            alert(e.message);
+            localStorage.clear();
             console.log('oi');
         });
         

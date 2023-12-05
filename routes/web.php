@@ -24,6 +24,40 @@ Route::get('/testandoo', function () {
     SendEmailJob::dispatch();
     return 'Enviou';
 });
+Route::get("testando", function(){
+    return view("sse");
+});
+Route::get('/sse', function(){
+    
+    date_default_timezone_set("America/New_York");
+    header("Cache-Control: no-store");
+    header("Content-Type: text/event-stream");
+    
+    $counter = rand(1, 10);
+    while (true) {
+      // Every second, send a "ping" event.
+    
+      echo "event: horario\n";
+      $curDate = date("H:i:s");
+      echo 'data: ' . $curDate;
+      echo "\n\n";
+    
+      // Send a simple message at random intervals.
+    
+     
+    
+      
+    
+      ob_end_flush();
+      flush();
+    
+      // Break the loop if the client aborted the connection (closed the page)
+    
+      if (connection_aborted()) break;
+    
+      sleep(1);
+    }
+});
 Route::get('websocket/{msg}', function ($msg){
     // die($msg);
 
