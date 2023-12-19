@@ -11,7 +11,8 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "predis/predis": "^2.2",
-        "pusher/pusher-php-server": "^7.2"
+        "pusher/pusher-php-server": "^7.2",
+        "stancl/tenancy": "^3.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -28,7 +29,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files" : [
+            "app/Helpers/custom-helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

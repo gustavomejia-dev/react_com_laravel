@@ -16,9 +16,9 @@ export const setDataUser = (data: any, rememberUser: boolean = false) => {
 
 export const getDataUser = (rememberUser: boolean = false) => {
    const userData = rememberUser ?  localStorage.getItem("data") : sessionStorage.getItem("data");
-   
-   if(userData != null){
-    
+   console.log('é: ? ' + userData);
+   if(typeof(userData) != 'string' && userData !== null){
+        
     // console.log('user '+ userData);
         return JSON.parse(userData);
     

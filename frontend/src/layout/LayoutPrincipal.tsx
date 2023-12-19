@@ -72,7 +72,7 @@ function LayoutPrincipal() {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys = {getStateMenu()} mode="inline" onClick={({key})=> setStateMenu(key)}>
+        <Menu theme="dark"  mode="inline">
 
             <Menu.Item key="1">
                     <PieChartOutlined />
@@ -85,11 +85,22 @@ function LayoutPrincipal() {
                     <span>Usuarios</span>
                     <Link to="private/usuario"/>
             </Menu.Item>
+            {/* <Menu.Item key="3">
+                    <PieChartOutlined />
+                    <span>Produtos</span>
+                    
+                    <Link to="private/produtos"/>
+            </Menu.Item> */}
+            <Menu.SubMenu title="Cadastrar">
             <Menu.Item key="3">
                     <PieChartOutlined />
                     <span>Produtos</span>
-                    <Link to="private/produtos"/>
+                    
+                    <Link to="cadastrar/produtos"/>
             </Menu.Item>
+
+
+            </Menu.SubMenu>
         </Menu>
       </Sider>
       <Layout>

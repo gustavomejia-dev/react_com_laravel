@@ -4,6 +4,7 @@ use App\Events\SendMessageWebSocketEvent;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PasswordController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -44,6 +45,7 @@ Route::apiResource('/users', UserController::class);
     Route::post('logout', [LoginController::class, 'logout']);
     Route::post('/users/list', [UserController::class, 'list']);
     Route::post('register', [RegisterController::class, 'register']);
+    Route::apiResource('/produto', ProductController::class);
     
  });
  

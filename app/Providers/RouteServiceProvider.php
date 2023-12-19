@@ -29,12 +29,31 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+            $this->mapTenantRoutes();
+            
+            // Route::middleware('api')
+            //     ->prefix('api')
+            //     ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+            // Route::middleware('web')
+            //     ->group(base_path('routes/web.php'));
         });
+    }
+
+
+    public function mapTenantRoutes(): void
+    {
+        Route::middleware('api')
+            ->domain(config('tenants.central_domain'))
+            ->prefix('api')
+            ->group(base_path('routes/api.php'));
+
+        Route::middleware('web')
+            ->domain(config('tenants.central_domain'))
+            ->group(base_path('routes/web.php'));
+
+        Route::middleware('web')
+            ->domain(config('tenants.central_domain'))
+            ->group(base_path('routes/tenants.php'));
     }
 }

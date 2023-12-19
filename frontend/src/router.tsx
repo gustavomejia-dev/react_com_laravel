@@ -4,7 +4,8 @@ import LayoutPrincipal from "./layout/LayoutPrincipal";
 import Home from "./pages/Home/Home";
 import { RequireAuth } from "./context/Auth/RequireAuth";
 import Private from "./pages/Private/Private";
-import { TableUsuarios } from "./components/SIdebar/Usuarios/TableUsuarios";
+import { TableUsuarios } from "./components/Sidebar/Usuarios/TableUsuarios";
+import { Produtos } from "./components/Sidebar/Cadastrar/Produtos";
 // import { Users } from "./components/Sidebar/Users";
 
 
@@ -40,8 +41,8 @@ const router = createBrowserRouter (
                                             },    
 
                                             {
-                                                path:'private/produtos', 
-                                                element:<h1>produtos</h1>
+                                                path:'cadastrar/produtos', 
+                                                element:<Produtos/>
                                             },    
                                     ]
                                     }
