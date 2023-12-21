@@ -36,9 +36,10 @@ export const AuthProvider = ({children}: childrenType) => {
             
             setDataUser(auth.result.user, rememberToken);//
             let data = localStorage.getItem('data');
-            if(data != null && data !== undefined){
+            if(data != null && data != undefined){
+                console.log('aquiii: ' + data);
                 const {remember_token} = JSON.parse(data);
-
+                
                 localStorage.setItem('ID', remember_token);
             }
             

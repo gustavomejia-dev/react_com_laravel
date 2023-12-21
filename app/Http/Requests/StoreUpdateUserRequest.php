@@ -32,6 +32,10 @@ class StoreUpdateUserRequest extends FormRequest
             'required',
             'min:4',
             'max:100',
+        ],
+        'db' => [
+            'required',
+            'max:50',
         ]
     ];
     if($this->method() === 'PATCH'){

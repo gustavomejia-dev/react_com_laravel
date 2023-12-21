@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Mail\TesteMarkdown;
+use App\Models\Tenant;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -33,7 +34,17 @@ Route::get('websocket/{msg}', function ($msg){
     // return "safe";
     
 });
-Route::post('/teste',function (){
+// Route::post('/testando', function (Request $request){
+//     // $tenant = Tenant::all();
+//     $a = 'hello';
+//     $$a = "world";
+//     return response()->json("$a {$$a}", 200);
+    
+    
+        
+
+// });
+Route::post('teste',function (){
     Mail::to('ti@wdio.com.br', 'Suporte')->send(new TesteMarkdown());
 });
 Route::apiResource('/users', UserController::class);

@@ -12,15 +12,22 @@ import Item from 'antd/es/list/Item';
 import useWebSocket from 'react-use-websocket';
 import '../../hooks/websocket'
 import { echo } from '../../hooks/websocket';
+import { getSubdomain } from '../../utils/helpers';
+
+const subDomain = getSubdomain(window.location.hostname);
+let verifySubDoMain = '';
 function Login() {
-   
+    const api = useApi();
     // const [theme, toggleTheme] = useContext(AuthContext);
+    // console.log('adom ' + subDomain);
+    
     const navigate = useNavigate();
     const [email, setEmail] = useState<any>('');  
     const [password, setPassword] = useState<any>('');
     const [logged, signin, token, signout, rememberToken, setRememberToken] = useContext(AuthContext);
     const [showModal, setShowModal] = useState(false);
     const remember_token = localStorage.getItem('ID');
+    const [isDomainExist, setIsDomainExist] = useState(false);
     // const testee = 'testeeeeeee';
     // const {lastJsonMessage} = useWebSocket(`wss://fastfood.sis/api/websocket/${testee}`,{ 
     //     onOpen: () => console.log('deu certo'),
@@ -33,9 +40,20 @@ function Login() {
     //         }
     //     }
     // });
+    useEffect(() => {
+        
+        const verifySubDomain =  async () =>  await api.verifyDomainExist(subDomain);
+        if(verifySubDoMain && verifySubDoMain != undefined){
+            setIsDomainExist(true);
+            console.log(verifySubDomain());
+        }
+        // return () => {console.log('')}
+    }, []);
+
     useEffect(()=>{
-        //se já estiver logado ele simplesmente já direciona para a rota privada
-        // console.lo  g('login', remember_token);
+
+        
+        
         echo.channel('public-channel')
 
         // Listen for the event called "button.clicked"
@@ -43,10 +61,11 @@ function Login() {
             
             // Display the "message" in an alert box
             localStorage.clear();
-            console.log('oi');
+           
         });
         
-    
+        //se já estiver logado ele simplesmente já direciona para a rota privada
+        // console.lo  g('login', remember_token);
         if(token && remember_token != ''){
             navigate('/private');
             console.log('LOGADO');
@@ -56,7 +75,7 @@ function Login() {
         
     },[]);
     
- 
+    
     async function handleSubmit(){
 
 
@@ -104,10 +123,10 @@ function Login() {
     }
 
   return (
-        
+    
       <div className='container align-self-center'>
+        {!isDomainExist ? <h1>Não Existe</h1> : 
         
-        Login
         <Row 
         justify="center"
         align="middle"
@@ -155,10 +174,10 @@ function Login() {
         
            
         
-        {/* <Link to={'/private'}>Não tem Conta? Cadastre-se</Link> */}
-
-
         
+
+
+    }  
     </div>  
   )
 }

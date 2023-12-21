@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\UserMaster;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,6 +15,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {   
-        User::factory()->count(50)->create();
+        UserMaster::factory()->count(50)->create();
     }
 }

@@ -2,29 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
+use Stancl\Tenancy\Contracts\TenantWithDatabase;
+use Stancl\Tenancy\Database\Concerns\HasDatabase;
+use Stancl\Tenancy\Database\Concerns\HasDomains;
 
-class Tenant extends Model
+class Tenant extends BaseTenant implements TenantWithDatabase
 {
-    use HasFactory;
-
-    protected $fillable = [
-        // 'plan_id',
-        'name',
-        'prefix_Domain',
-        'logo',
-        'is_active',
+    use HasDatabase, HasDomains;
 
 
-    ];
-    public function user(): BelongsToMany {
-        return $this->belongsToMany(User::class, 'tenant_id');
-    }
 
-    // public function setting():HasOne{
-    //     return $this->hasOne(Setting:class);
-    // }
 }

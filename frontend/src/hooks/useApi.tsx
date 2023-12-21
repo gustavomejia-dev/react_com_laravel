@@ -48,6 +48,21 @@ export const useApi = () => ({
         
     },
 
+
+    verifyDomainExist : async (domain : string) => {
+        try{
+            const result = await apiUrl.post('/testando', domain, config);
+            const data = result.data;
+            const status = result.status;
+            if (status == 200) {
+                return { data, status};
+              } else {
+                throw { message: data, status : status };
+              }
+        }catch(error){
+            console.log(error);
+        }
+    },
     getCodeForgetPassword : async (codigo : string, password : string, email: string, password_confirmation: string) => {
         try{
             const result = await apiUrl.post('/password/store', {codigo, password, email, password_confirmation}, config);

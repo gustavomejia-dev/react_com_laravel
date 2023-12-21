@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
+
+use App\Models\UserMaster;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -22,7 +23,7 @@ class UserController extends Controller
             
             if($onlyReq['name'] != null || $onlyReq['email'] != null){
                 
-                    $users = User::select('id',  'name' , 'email', 'created_at')
+                    $users = UserMaster::select('id',  'name' , 'email', 'created_at')
                                     ->where('name', 'LIKE' , "{$onlyReq['name']}%")
                                     ->where('email' , 'LIKE' , "{$onlyReq['email']}%")->get();
 
@@ -43,17 +44,18 @@ class UserController extends Controller
     
 
     public function index(): ResourceCollection{
-        $users = User::paginate();
+        $users = UserMaster::paginate();
         return UserResource::collection($users);// traz uma collection com outra dentro
     }
     
     public function store(StoreUpdateUserRequest $request){
-        
+        die('aquii');
         $data = $request->validated();//enviando apenas valores validados
-  
-        $data['passowrd'] = bcrypt($request->password);//encript password
-        $user = User::create($data);//tomar cuidado ao enviar um array
-  
+        
+        $data['password'] = bcrypt($request->password);//encript password
+    
+        $user = UserMaster::create($data);//tomar cuidado ao enviar um array
+        // return $user;
         return new UserResource($user);
     }
 
@@ -65,13 +67,13 @@ class UserController extends Controller
         }
          */
         
-        $user = User::findOrFail($id);
+        $user = UserMaster::findOrFail($id);
         return new UserResource($user);
     }
 
     public function update(StoreUpdateUserRequest $request, string $id){
         $data = $request->all();
-        $user = User::findOrFail($id);
+        $user = UserMaster::findOrFail($id);
         if($request->password){
             $data['password'] = bcrypt($request->getPassword());
         }
@@ -90,7 +92,7 @@ class UserController extends Controller
         // return response()->json(['result' => [$request->email, $request->password]], 200);
         // if(Auth::attempt(['email' =>$request->email, 'password' => $request->password])){
             // $user = Auth::user();
-            $token = User::find(4)->createToken('token_name');
+            $token = U:find(4)->createToken('token_name');
  
             return ['token' => $token->plainTextToken];
             // $user = User::where('email', $request->email)->get();

@@ -19,17 +19,20 @@ class LoginController extends Controller
 
 
     public function login (AuthRequest $request){
-       
-        // return response()->json($request->all(), 404);
+        // $a = 'hello';
+        // $$a = 'word';
+        
+        // return response()->json("$a {$$a}", 404);
         
         
         $validated = $request->validated();
-        // return response()->json(gettype($validated), 200);
+        
         
         
         $user = User::where('email', $validated['email'])->first();
         //caso o checkbox remember me esteja selecionado,  cai nesse if
         if(isset($validated['remember_token'])){
+            return('result: ' . $validated['remember_token']);
             //adicionando o remember token e acrescentando no final do token as duas primeiras letras do nome do usuario;
             $user->remember_token = $user->makeVisible('remember_token')->remember_token . substr($user->name, 0, 2);
                  

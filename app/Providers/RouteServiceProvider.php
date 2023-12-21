@@ -29,31 +29,60 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            $this->mapTenantRoutes();
+            // $this->mapTenantRoutes();
             
-            // Route::middleware('api')
-            //     ->prefix('api')
-            //     ->group(base_path('routes/api.php'));
+            Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api.php'));
 
-            // Route::middleware('web')
-            //     ->group(base_path('routes/web.php'));
+            Route::middleware('web')
+                ->group(base_path('routes/web.php'));
         });
     }
 
 
     public function mapTenantRoutes(): void
     {
+
         Route::middleware('api')
-            ->domain(config('tenants.central_domain'))
-            ->prefix('api')
-            ->group(base_path('routes/api.php'));
+        // ->domain($domain)
+        ->domain(config('tenants.central_domain'))
+        ->prefix('api')
+        ->group(base_path('routes/api.php'));
 
         Route::middleware('web')
             ->domain(config('tenants.central_domain'))
+            // ->domain($domain)
             ->group(base_path('routes/web.php'));
 
         Route::middleware('web')
+            
             ->domain(config('tenants.central_domain'))
             ->group(base_path('routes/tenants.php'));
+
+        // foreach($this->centralDomains() as $domain){
+        //     Route::middleware('api')
+        //     ->domain($domain)
+        //     // ->domain(config('tenants.central_domain'))
+        //     ->prefix('api')
+        //     ->group(base_path('routes/api.php'));
+
+        //     Route::middleware('web')
+        //         // ->domain(config('tenants.central_domain'))
+        //         ->domain($domain)
+        //         ->group(base_path('routes/web.php'));
+
+        //     Route::middleware('web')
+                
+        //         // ->domain(config('tenants.central_domain'))
+        //         ->group(base_path('routes/tenants.php'));
+        // }
+        
     }
+
+
+    protected function centralDomains(): array
+        {
+            return config('tenancy.central_domains');
+        }
 }
