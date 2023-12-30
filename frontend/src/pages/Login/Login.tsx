@@ -13,18 +13,19 @@ import useWebSocket from 'react-use-websocket';
 import '../../hooks/websocket'
 import { echo } from '../../hooks/websocket';
 import { getSubdomain } from '../../utils/helpers';
+import { verify } from 'crypto';
 
-const subDomain = getSubdomain(window.location.hostname);
-let verifySubDoMain = '';
+
+// let verifySubDoMain = '';
 function Login() {
-    const api = useApi();
+    
     // const [theme, toggleTheme] = useContext(AuthContext);
     // console.log('adom ' + subDomain);
     
     const navigate = useNavigate();
     const [email, setEmail] = useState<any>('');  
     const [password, setPassword] = useState<any>('');
-    const [logged, signin, token, signout, rememberToken, setRememberToken] = useContext(AuthContext);
+    const [logged, signin, token, signout, rememberToken, setRememberToken, verifyDomainExist, tenant] = useContext(AuthContext);
     const [showModal, setShowModal] = useState(false);
     const remember_token = localStorage.getItem('ID');
     const [isDomainExist, setIsDomainExist] = useState(false);
@@ -40,16 +41,13 @@ function Login() {
     //         }
     //     }
     // });
+    
+    
     useEffect(() => {
+        verifyDomainExist();
+        console.log(typeof(tenant));
         
-        const verifySubDomain =  async () =>  await api.verifyDomainExist(subDomain);
-        if(verifySubDoMain && verifySubDoMain != undefined){
-            setIsDomainExist(true);
-            console.log(verifySubDomain());
-        }
-        // return () => {console.log('')}
-    }, []);
-
+    }, [tenant])
     useEffect(()=>{
 
         
@@ -68,7 +66,7 @@ function Login() {
         // console.lo  g('login', remember_token);
         if(token && remember_token != ''){
             navigate('/private');
-            console.log('LOGADO');
+          
             return ;
         }
         return () => {console.log('unmount')}
@@ -125,7 +123,7 @@ function Login() {
   return (
     
       <div className='container align-self-center'>
-        {!isDomainExist ? <h1>Não Existe</h1> : 
+        {!tenant ? <h1>Não Existe</h1> : 
         
         <Row 
         justify="center"

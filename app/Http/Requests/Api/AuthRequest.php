@@ -24,7 +24,8 @@ class AuthRequest extends FormRequest
         return [
             'email' => 'required|max:255|email',
             'password' => 'required|max:255',
-            'remember_token' => 'boolean'
+            'remember_token' => 'boolean',
+            'tenant_id' => 'required'
             // 'body' => 'required',
             // 'email' => ['required|email|max:255'],
             // 'password' => ['required|max:255'],
@@ -38,6 +39,7 @@ class AuthRequest extends FormRequest
             
                 'email.required' => 'A email is required',
                 'password.required' => 'A password is required',
+                
             
         ];
     }

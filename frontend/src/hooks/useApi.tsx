@@ -11,6 +11,9 @@ export const config: AxiosRequestConfig = {
     validateStatus: (status) =>{
         return status < 500;
     },
+    params: {
+        tenant_id: 'sucoo'//obter metodo dinamico para obter o domain
+      },
     headers: {
         Authorization: 'Bearer ' + getTokenLogin(),
         
@@ -50,18 +53,24 @@ export const useApi = () => ({
 
 
     verifyDomainExist : async (domain : string) => {
+        
         try{
-            const result = await apiUrl.post('/testando', domain, config);
+            const result = await apiUrl.post('/verificandotenant', {domain: domain}, config);
             const data = result.data;
+            
             const status = result.status;
+          
             if (status == 200) {
-                return { data, status};
+                // console.log('result ' + data);
+                return data;
               } else {
+              
                 throw { message: data, status : status };
               }
         }catch(error){
             console.log(error);
         }
+     
     },
     getCodeForgetPassword : async (codigo : string, password : string, email: string, password_confirmation: string) => {
         try{

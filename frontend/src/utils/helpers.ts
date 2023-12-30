@@ -1,16 +1,16 @@
 import { APPS } from "./constants";
 
-export const getApp = () =>  {
-    const subDomain = getSubdomain(window.location.hostname);
-    const  main = APPS.find((app) => app.main);
-    if(!main) throw new Error ("ERRO");
-    if(subDomain === "" ) return main.app
-    const app = APPS.find((app) => subDomain === app.subDomain);
-    console.log(subDomain);
-}
+// export const getApp = () =>  {
+//     const subDomain = getSubdomain(window.location.hostname);
+//     const  main = APPS.find((app) => app.main);
+//     if(!main) throw new Error ("ERRO");
+//     if(subDomain === "" ) return main.app
+//     const app = APPS.find((app) => subDomain === app.subDomain);
+//     console.log(subDomain);
+// }
 
 export const getSubdomain = (location : string) => {
-    // console.log(location);
+    
     const locationParts = location.split(".");
     let sliceTill = -2;
     const isLocalHost = locationParts.slice(-1)[0] === "localhost";

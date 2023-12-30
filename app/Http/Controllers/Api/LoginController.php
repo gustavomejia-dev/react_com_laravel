@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AuthRequest;
 use App\Mail\MailableResetPassword;
+use App\Models\Tenant;
 use App\Models\User;
 use App\Models\UserForgotPassword;
 use Exception;
@@ -18,21 +19,25 @@ class LoginController extends Controller
 {
 
 
+    public function isTenantExist(Request $request){
+        // return 'aqui';
+       $result =  isTenantExistHelper($request->domain);
+        return $result;
+       
+    }
     public function login (AuthRequest $request){
-        // $a = 'hello';
-        // $$a = 'word';
-        
-        // return response()->json("$a {$$a}", 404);
+    
         
         
         $validated = $request->validated();
         
-        
-        
+        // $t = $this->isTenantExist($validated['tenant_id']);
+        $verifyTenant = isTenantExistHelper($validated['tenant_id']);
+        return response()->json($verifyTenant, 200);
         $user = User::where('email', $validated['email'])->first();
         //caso o checkbox remember me esteja selecionado,  cai nesse if
         if(isset($validated['remember_token'])){
-            return('result: ' . $validated['remember_token']);
+           
             //adicionando o remember token e acrescentando no final do token as duas primeiras letras do nome do usuario;
             $user->remember_token = $user->makeVisible('remember_token')->remember_token . substr($user->name, 0, 2);
                  

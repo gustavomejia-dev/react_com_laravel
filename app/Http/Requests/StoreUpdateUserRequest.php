@@ -21,6 +21,7 @@ class StoreUpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {   $rules = [
+        'tenant_id' => 'required',
         'name' => 'required|min:3|max:255',
         'email' => [
             'required',
@@ -33,10 +34,7 @@ class StoreUpdateUserRequest extends FormRequest
             'min:4',
             'max:100',
         ],
-        'db' => [
-            'required',
-            'max:50',
-        ]
+        
     ];
     if($this->method() === 'PATCH'){
         $rules['password'] = [

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
-
+use App\Models\User;
 use App\Models\UserMaster;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class UserController extends Controller
             
             if($onlyReq['name'] != null || $onlyReq['email'] != null){
                 
-                    $users = UserMaster::select('id',  'name' , 'email', 'created_at')
+                    $users = User::select('id',  'name' , 'email', 'created_at')
                                     ->where('name', 'LIKE' , "{$onlyReq['name']}%")
                                     ->where('email' , 'LIKE' , "{$onlyReq['email']}%")->get();
 
@@ -44,17 +44,17 @@ class UserController extends Controller
     
 
     public function index(): ResourceCollection{
-        $users = UserMaster::paginate();
+        $users = User::paginate();
         return UserResource::collection($users);// traz uma collection com outra dentro
     }
     
     public function store(StoreUpdateUserRequest $request){
-        die('aquii');
+      
         $data = $request->validated();//enviando apenas valores validados
-        
+        // return response()->json($data);
         $data['password'] = bcrypt($request->password);//encript password
     
-        $user = UserMaster::create($data);//tomar cuidado ao enviar um array
+        $user = User::create($data);//tomar cuidado ao enviar um array
         // return $user;
         return new UserResource($user);
     }
@@ -67,13 +67,13 @@ class UserController extends Controller
         }
          */
         
-        $user = UserMaster::findOrFail($id);
+        $user = User::findOrFail($id);
         return new UserResource($user);
     }
 
     public function update(StoreUpdateUserRequest $request, string $id){
         $data = $request->all();
-        $user = UserMaster::findOrFail($id);
+        $user = User::findOrFail($id);
         if($request->password){
             $data['password'] = bcrypt($request->getPassword());
         }
@@ -88,29 +88,29 @@ class UserController extends Controller
         return response()->json([], 204);
     }
 
-    public function login(Request $request){
-        // return response()->json(['result' => [$request->email, $request->password]], 200);
-        // if(Auth::attempt(['email' =>$request->email, 'password' => $request->password])){
-            // $user = Auth::user();
-            $token = U:find(4)->createToken('token_name');
+    // public function login(Request $request){
+    //     // return response()->json(['result' => [$request->email, $request->password]], 200);
+    //     // if(Auth::attempt(['email' =>$request->email, 'password' => $request->password])){
+    //         // $user = Auth::user();
+    //         $token = U:find(4)->createToken('token_name');
  
-            return ['token' => $token->plainTextToken];
-            // $user = User::where('email', $request->email)->get();
-            // $token = $user->createToken('token_name');
+    //         return ['token' => $token->plainTextToken];
+    //         // $user = User::where('email', $request->email)->get();
+    //         // $token = $user->createToken('token_name');
 
-            // return response()->json(['result' => $token], 200);
-            // $token = $user->createToken('JWT');
+    //         // return response()->json(['result' => $token], 200);
+    //         // $token = $user->createToken('JWT');
 
         
-         return response()->json(['result' => 'not found'], 404);
-        // $email = 'skate@hotmail.com';
-        // $user = User::where('email', $request->email)->firstOrFail();
-        // return response()->json($user, 404);
-        // if($user){
+    //      return response()->json(['result' => 'not found'], 404);
+    //     // $email = 'skate@hotmail.com';
+    //     // $user = User::where('email', $request->email)->firstOrFail();
+    //     // return response()->json($user, 404);
+    //     // if($user){
             
-        //     return gettype($user);
-        // }
-        // return response()->json(['result' => 'not found'], 404);
+    //     //     return gettype($user);
+    //     // }
+    //     // return response()->json(['result' => 'not found'], 404);
         
-    }
+    // }
 }

@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Traits\TenantScopeTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -14,17 +15,20 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    protected $with = ['tenant'];
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'tenant_id',
         'name',
         'email',
         'password',
-        'db',
         
+    
     ];
 
     /**
@@ -49,4 +53,7 @@ class User extends Authenticatable
     // public function userMaster(){
     //     return $this->belongsTo(UserMaster::class);
     // }
+    public function tenant(): BelongsTo {
+        return $this->belongsTo(Tenant::class);
+    }
 }

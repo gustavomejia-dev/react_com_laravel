@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Mail\TesteMarkdown;
@@ -42,6 +43,8 @@ Route::get('websocket/{msg}', function ($msg){
     
     
         
+Route::post('/verificandotenant',[TenantController::class, 'isTenantExist']);
+Route::apiResource('/tenant', TenantController::class);    
 
 // });
 Route::post('teste',function (){

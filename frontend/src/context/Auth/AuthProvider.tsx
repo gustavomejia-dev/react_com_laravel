@@ -3,6 +3,7 @@ import { AuthContext } from "./AuthContext";
 import { apiUrl, useApi } from "../../hooks/useApi";
 import { setTokenLogin, getTokenLogin, removeTokenLogin } from "../../utils/tokenLogin";
 import { removeDataUser, setDataUser, getRememberToken } from "../../utils/dataUser";
+import { getSubdomain } from "../../utils/helpers";
 
 type childrenType = {
     children: JSX.Element
@@ -15,8 +16,28 @@ export const AuthProvider = ({children}: childrenType) => {
     const [isLogged, setIsLogged] = useState<any>();
     const [isLogout, setIsLogout] = useState();
     const [rememberToken, setRememberToken] = useState(false);
+    const [tenant, setTenant] = useState<string>();
     // const teste:string = 'testando';
-   
+    
+
+    // const result =  api.verifyDomainExist(subDomain);
+    const verifyDomainExist = async () => {
+        // console.log(window.location.hostname);
+        const subDomain = getSubdomain(window.location.hostname);
+        const result =  await api.verifyDomainExist(subDomain);
+        if(result){
+            // console.log(result);
+            const data = JSON.stringify(result);
+            
+            // setTenant(result.id);
+            setTenant(data);
+
+        }
+        // console.log(tenant);
+        
+        return tenant;
+        
+    }
     const toggleTheme = () => {
         setTheme(theme  === 'light' ? 'dark' : 'light');
     }
@@ -71,7 +92,7 @@ export const AuthProvider = ({children}: childrenType) => {
     var token = ''
     
     return(
-        <AuthContext.Provider value={[isLogged, signin, token, signout, rememberToken, setRememberToken]}>
+        <AuthContext.Provider value={[isLogged, signin, token, signout, rememberToken, setRememberToken, verifyDomainExist, tenant]}>
             {children}
         </AuthContext.Provider>
 

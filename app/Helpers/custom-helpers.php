@@ -6,6 +6,17 @@ declare(strict_types=1);
 
 use App\Models\Tenant;
 
+if(!function_exists('isTenantExistHelper')){
+    function isTenantExistHelper(string $tenant){
+        
+        $tenant = Tenant::find($tenant);
+        // $status = 500;
+        $tenant ? $status = 200 : $status = 500;
+        return response()->json($tenant, $status);
+    }
+
+}
+
 if (!function_exists('tenant')) {
     function tenant(): ?Tenant
     {
