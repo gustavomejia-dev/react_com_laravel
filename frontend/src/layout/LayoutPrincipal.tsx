@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   DesktopOutlined,
   FileOutlined,
@@ -8,10 +8,11 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import { getDataUser } from '../utils/dataUser';
 import { Ul } from '../components/Header/HeaderList';
 import { config } from '../hooks/useApi';
+import { AuthContext } from '../context/Auth/AuthContext';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -48,9 +49,12 @@ function getItem(
 
 
 function LayoutPrincipal() {
-  
 
-  
+  const [isLogged, signin] = useContext(AuthContext);
+  // console.log('aquiiii');
+  const teste = useParams();
+  console.log('aquii') 
+  console.log(teste);
   /*  SALVA o Estado do Menu*/
   const [keyMenu, setKeyMenu] = useState<string | any>();
   const setStateMenu = (key : string): void => {
@@ -77,7 +81,7 @@ function LayoutPrincipal() {
             <Menu.Item key="1">
                     <PieChartOutlined />
                     <span>Dashboard</span>
-                    <Link to="/private"/>
+                    <Link to='/private'/>
             </Menu.Item>
 
             <Menu.Item key="2">

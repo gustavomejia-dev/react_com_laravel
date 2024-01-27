@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter, useParams } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import LayoutPrincipal from "./layout/LayoutPrincipal";
 import Home from "./pages/Home/Home";
@@ -6,37 +6,48 @@ import { RequireAuth } from "./context/Auth/RequireAuth";
 import Private from "./pages/Private/Private";
 import { TableUsuarios } from "./components/Sidebar/Usuarios/TableUsuarios";
 import { Produtos } from "./components/Sidebar/Cadastrar/Produtos";
+import { PageNotFound } from "./components/PageNotFound/PageNotFound";
+
 // import { Users } from "./components/Sidebar/Users";
 
+const parsedData = window.location.pathname.split("/"); 
+let domain = parsedData[1];
+console.log('dominio' + domain);
 
 const router = createBrowserRouter (
+    
     [
+            
         {
-            path: '/',
-            element: <Navigate to = "/login"/>
+            path: '/:tenant/',
+            element: <Navigate to = "/:tenant/login"/>
+            
         },
-
+        {
+            path:'/:tenant/login', 
+            element:<Login/>
+        },
         {
             
            
 
                   
                     element: <RequireAuth/>,
+                    
+                    
                     children:[
+                                   
                                     {
-                                    path:'/login', 
-                                    element:<Login/>
-                                    },
-                                    {
-                                    path: '/private',
                                     element: <LayoutPrincipal/>,
+                                    path: `${domain}/private`,
+                                    
                                     children: [
                                             {
-                                                path:'private/usuario', 
+                                                path:`usuario`, 
                                                 element:<TableUsuarios/>
                                             },
                                             {
-                                                path:'private/teste', 
+                                                path:`teste`, 
                                                 element:<h1>teste</h1>
                                             },    
 
@@ -53,7 +64,10 @@ const router = createBrowserRouter (
             
         },
 
-
+        {
+            path: '*',
+            element: <PageNotFound messageDefault={false}/>
+        },
 
     ]
 );

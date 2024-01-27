@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Button,
   Cascader,
@@ -14,11 +14,16 @@ import {
 import { valueType } from 'antd/es/statistic/utils';
 import { useApiProduct } from '../../../../hooks/useApiProduct';
 import { apiUrl, config } from '../../../../hooks/useApi';
+import { AuthProvider } from '../../../../context/Auth/AuthProvider';
+import { AuthContext } from '../../../../context/Auth/AuthContext';
 
 type SizeType = Parameters<typeof Form>[0]['size'];
 
 export const Produtos = () => {
 
+const [isLogged, signin] = useContext(AuthContext);
+console.log(isLogged);
+// console.log(logged);
 const [data, setData] = useState<any>([]);
 const [filter, setfilter] = useState(
 
@@ -53,7 +58,7 @@ const [filter, setfilter] = useState(
 
   return (
     <>
-        <h1>Cadastre Produtos</h1>
+        <h1>Cadastro de Produtos</h1>
             <Form
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 14 }}
@@ -72,9 +77,10 @@ const [filter, setfilter] = useState(
                     filter.tipo = e;
                     console.log(filter.qtd)
                 }}>
-                    <Select.Option value="1">Decoração</Select.Option>
-                    <Select.Option value="2">Ferramentas</Select.Option>
-                    <Select.Option value="3">Floricultura</Select.Option>
+                    <Select.Option value="1">Informática</Select.Option>
+                    <Select.Option value="2">Decoração</Select.Option>
+                    <Select.Option value="3">Ferramentas</Select.Option>
+                    <Select.Option value="4">Floricultura</Select.Option>
                 </Select>
             </Form.Item>
             
@@ -97,7 +103,7 @@ const [filter, setfilter] = useState(
                 </Select>
             </Form.Item>
             <Form.Item>
-                <Button onClick={cadastrarProduto}>Enviar</Button>
+                <Button onClick={cadastrarProduto}>Cadastrar</Button>
             </Form.Item>
             </Form>
     </>

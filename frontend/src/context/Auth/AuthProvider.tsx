@@ -3,11 +3,13 @@ import { AuthContext } from "./AuthContext";
 import { apiUrl, useApi } from "../../hooks/useApi";
 import { setTokenLogin, getTokenLogin, removeTokenLogin } from "../../utils/tokenLogin";
 import { removeDataUser, setDataUser, getRememberToken } from "../../utils/dataUser";
-import { getSubdomain } from "../../utils/helpers";
+import { getSubdomain, setTenantId } from "../../utils/helpers";
+import { useParams } from "react-router-dom";
 
 type childrenType = {
     children: JSX.Element
 }
+// const [teste, setTeste] = useState<any>();
 export const AuthProvider = ({children}: childrenType) => {
 
    
@@ -16,49 +18,38 @@ export const AuthProvider = ({children}: childrenType) => {
     const [isLogged, setIsLogged] = useState<any>();
     const [isLogout, setIsLogout] = useState();
     const [rememberToken, setRememberToken] = useState(false);
-    const [tenant, setTenant] = useState<string>();
+    const [tenant, setTenant] = useState<string>('');
+    // console.log('tenant ' + tenant);
     // const teste:string = 'testando';
-    
+    // console.log(isLogged);
 
     // const result =  api.verifyDomainExist(subDomain);
-    const verifyDomainExist = async () => {
-        // console.log(window.location.hostname);
-        const subDomain = getSubdomain(window.location.hostname);
-        const result =  await api.verifyDomainExist(subDomain);
-        if(result){
-            // console.log(result);
-            const data = JSON.stringify(result);
-            
-            // setTenant(result.id);
-            setTenant(data);
+ 
 
-        }
-        // console.log(tenant);
-        
-        return tenant;
-        
-    }
+    // verifyDomainExist();
     const toggleTheme = () => {
         setTheme(theme  === 'light' ? 'dark' : 'light');
     }
 
-    const signin =  async (email: string, password :string, remember_token: string) => {
+    const signin =  async (email: string, password :string, remember_token: string, tenant : string) => {
         
-        const auth = await api.signin(email, password, remember_token);
+        const auth = await api.signin(email, password, remember_token, tenant);
         
         if(auth  > 400){//verificando se a request de login deu certo
             return false;
         
         }
         else{
-            
+            console.log(auth);
             setIsLogged(auth.result.user);//dados do usuario
             setTokenLogin(auth.result.token, rememberToken);//"../../utils/tokenLogin";
-            
+            setTenantId(auth.result.tenant);
             setDataUser(auth.result.user, rememberToken);//
+          
+   
             let data = localStorage.getItem('data');
             if(data != null && data != undefined){
-                console.log('aquiii: ' + data);
+                // console.log('aquiii: ' + data);
                 const {remember_token} = JSON.parse(data);
                 
                 localStorage.setItem('ID', remember_token);
@@ -92,7 +83,7 @@ export const AuthProvider = ({children}: childrenType) => {
     var token = ''
     
     return(
-        <AuthContext.Provider value={[isLogged, signin, token, signout, rememberToken, setRememberToken, verifyDomainExist, tenant]}>
+        <AuthContext.Provider value={[isLogged, signin, token, signout, rememberToken, setRememberToken, tenant, setTenant]}>
             {children}
         </AuthContext.Provider>
 

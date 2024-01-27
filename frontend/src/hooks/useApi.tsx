@@ -2,17 +2,24 @@ import { AxiosRequestConfig, HttpStatusCode } from 'axios';
 import axios from 'axios';
 import { getTokenLogin } from '../utils/tokenLogin';
 import { ExceptionStatusType } from 'antd/es/result';
+import { getSubdomain } from '../utils/helpers';
+import { useContext } from 'react';
+import { AuthContext } from '../context/Auth/AuthContext';
 export const apiUrl = axios.create({
     baseURL : 'http://fastfood.sis/api',
 })
-export const config: AxiosRequestConfig = {
+
+// const [logged, signin, token, signout, rememberToken, setRememberToken, verifyDomainExist, tenant] = useContext(AuthContext);
+
+export var config: AxiosRequestConfig = {
     
     timeout: 60 * 1000,
     validateStatus: (status) =>{
         return status < 500;
     },
     params: {
-        tenant_id: 'sucoo'//obter metodo dinamico para obter o domain
+       //obter metodo dinamico para obter o domain
+        user_data: getTokenLogin()
       },
     headers: {
         Authorization: 'Bearer ' + getTokenLogin(),
@@ -28,18 +35,18 @@ export const config: AxiosRequestConfig = {
 //422 é erro de email invalido
 //404 as informações estão incorretas
 export const useApi = () => ({
-    signin: async(email: string, password: string, remember_token: string) =>{
-        
+    signin: async(email: string, password: string, remember_token: string, tenant : string) =>{
+     
         // const result = await axios.post('https://reqres.in/api/login', {email, password});
-        
-        const result = await apiUrl.post('login', {email, password, remember_token}, config)
+      
+        const result = await apiUrl.post('login', {email, password, remember_token, tenant}, config)
         .then((response) => {
-            
+          
             return response.data;
         })
         .catch((error)=>{
-            // console.log(error.response.status)
-            return error.response.status;
+            console.log(error.response)
+            // return error.response.status;
         })
        
         return result;

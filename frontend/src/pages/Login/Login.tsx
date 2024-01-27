@@ -1,98 +1,92 @@
 
-import { DatePicker, Row, Col, Form, Input, Button, message, Space, Checkbox } from 'antd';
+import { DatePicker, Row, Col, Form, Input, Button, message, Space, Checkbox, Result } from 'antd';
 import { useApi } from '../../hooks/useApi';
 import { AuthContext } from '../../context/Auth/AuthContext';
 import React, { useContext, useEffect, useState } from 'react'
 import { getTokenLogin } from '../../utils/tokenLogin';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Route, createBrowserRouter, createRoutesFromElements, useNavigate, useParams } from 'react-router-dom';
 import { Notification } from '../../components/Notification';
 import Private from '../Private/Private';
 import ForgetPassword from '../../components/Password/ForgetPassword';
 import Item from 'antd/es/list/Item';
-import useWebSocket from 'react-use-websocket';
 import '../../hooks/websocket'
 import { echo } from '../../hooks/websocket';
 import { getSubdomain } from '../../utils/helpers';
 import { verify } from 'crypto';
+import { PageNotFound } from '../../components/PageNotFound/PageNotFound';
+import { routerLayout } from '../../routerLayout';
+import { basename } from 'path/posix';
+import { LayoutTeste } from '../../layout/LayoutTeste';
 
 
 // let verifySubDoMain = '';
 function Login() {
-    
+   
+    const {tenant} = useParams();
+    console.log(tenant);
     // const [theme, toggleTheme] = useContext(AuthContext);
     // console.log('adom ' + subDomain);
-    
+   
+
     const navigate = useNavigate();
     const [email, setEmail] = useState<any>('');  
     const [password, setPassword] = useState<any>('');
-    const [logged, signin, token, signout, rememberToken, setRememberToken, verifyDomainExist, tenant] = useContext(AuthContext);
+    const [isLogged, signin, token, signout, rememberToken, setRememberToken] = useContext(AuthContext);
     const [showModal, setShowModal] = useState(false);
     const remember_token = localStorage.getItem('ID');
-    const [isDomainExist, setIsDomainExist] = useState(false);
-    // const testee = 'testeeeeeee';
-    // const {lastJsonMessage} = useWebSocket(`wss://fastfood.sis/api/websocket/${testee}`,{ 
-    //     onOpen: () => console.log('deu certo'),
-    //     onError: (err) =>  console.log(err),
-    //     shouldReconnect: () => true,
-    //     reconnectInterval: 3000,
-    //     onMessage: () => {
-    //         if(lastJsonMessage){
-    //             console.log(lastJsonMessage);
-    //         }
-    //     }
-    // });
-    
-    
-    useEffect(() => {
-        verifyDomainExist();
-        console.log(typeof(tenant));
-        
-    }, [tenant])
-    useEffect(()=>{
+    const [subDomain, setSubDomain] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);    
+
+  
+    // useEffect(()=>{
 
         
         
-        echo.channel('public-channel')
+    //     echo.channel('public-channel')
 
-        // Listen for the event called "button.clicked"
-        .listen('.SendMessageWebsocketEvent', (e: any) => {
+    //     // Listen for the event called "button.clicked"
+    //     .listen('.SendMessageWebsocketEvent', (e: any) => {
             
-            // Display the "message" in an alert box
-            localStorage.clear();
+    //         // Display the "message" in an alert box
+    //         // localStorage.clear();
            
-        });
+    //     });
         
-        //se já estiver logado ele simplesmente já direciona para a rota privada
-        // console.lo  g('login', remember_token);
-        if(token && remember_token != ''){
-            navigate('/private');
+    //     //se já estiver logado ele simplesmente já direciona para a rota privada
+    //     // console.lo  g('login', remember_token);
+    //     if(token && remember_token != ''){
+    //         navigate('/private');
           
-            return ;
-        }
-        return () => {console.log('unmount')}
+    //         return ;
+    //     }
+    //     return () => {console.log('unmount')}
         
-    },[]);
+    // },[]);
     
     
     async function handleSubmit(){
 
+        
+    
+        if(email == '' || password == ''){
+            message.error('Por Favor Preencha os campos Email e Senha');
+            return false;
+        }
 
-        const result = await signin(email, password, rememberToken);
+        const result = await signin(email, password, rememberToken, tenant);
+        
         if(result){
             
             // console.log('logado');
             
-            navigate('/private');
-            window.location.reload();
+            navigate(`/${tenant}/private`);
+            // window.location.reload();
             
             return true;
-        }else{
-            message.error('Email ou senha incorretos');
-            
-            return false;
-            
         }
-           
+        else{
+            message.error('Credenciais Invalidas');
+        }   
         // console.log(result);
         // console.log(token);
         // console.log('resultado do login ' + result);
@@ -123,7 +117,7 @@ function Login() {
   return (
     
       <div className='container align-self-center'>
-        {!tenant ? <h1>Não Existe</h1> : 
+        <p>teste: {process.env.REACT_APP_NOME_DA_VARIAVEL}</p>
         
         <Row 
         justify="center"
@@ -160,7 +154,7 @@ function Login() {
                 <ForgetPassword isOpen={showModal} setModalOpen={() => setShowModal(!showModal)}/>
             </Col>
           
-            
+           
             
         </Row>
       
@@ -175,7 +169,7 @@ function Login() {
         
 
 
-    }  
+    
     </div>  
   )
 }

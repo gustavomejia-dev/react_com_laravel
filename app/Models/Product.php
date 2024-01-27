@@ -12,7 +12,7 @@ class Product extends Model
     
     use HasFactory;
     protected $with = ['tenant'];
-    protected $fillable = ['name','price'];
+    protected $fillable = ['name','tipo', 'qtd', 'status', 'tenant_id'];
 
     public function tenant() : BelongsTo {
         return $this->belongsTo(Tenant::class);

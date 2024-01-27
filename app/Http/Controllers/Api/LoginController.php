@@ -27,21 +27,23 @@ class LoginController extends Controller
     }
     public function login (AuthRequest $request){
     
-        
+    
         
         $validated = $request->validated();
-        
-        // $t = $this->isTenantExist($validated['tenant_id']);
-        $verifyTenant = isTenantExistHelper($validated['tenant_id']);
-        return response()->json($verifyTenant, 200);
-        $user = User::where('email', $validated['email'])->first();
-        //caso o checkbox remember me esteja selecionado,  cai nesse if
-        if(isset($validated['remember_token'])){
-           
-            //adicionando o remember token e acrescentando no final do token as duas primeiras letras do nome do usuario;
-            $user->remember_token = $user->makeVisible('remember_token')->remember_token . substr($user->name, 0, 2);
-                 
+        if(!$validated['tenant']){
+            return 'aquiii';
         }
+        
+ 
+        $user = User::where('email', $validated['email'])->where('tenant_id', $validated['tenant'])->first();
+         
+        //caso o checkbox remember me esteja selecionado,  cai nesse if
+        // if(isset($validated['remember_token'])){
+           
+        //     //adicionando o remember token e acrescentando no final do token as duas primeiras letras do nome do usuario;
+        //     $user->remember_token = $user->makeVisible('remember_token')->remember_token . substr($user->name, 0, 2);
+                 
+        // }
         //verificando as credenciais fornececidas pelo usuario
         if(!$user || !Hash::check($validated['password'], $user->password)){
             return response()->json(['result' =>'Invalid Credentials'], 404);

@@ -21,3 +21,12 @@ export const getSubdomain = (location : string) => {
  
     // return locationParts[0];
 }
+
+export const setTenantId = (tenant : string) => {
+    localStorage.setItem('tenant_id', tenant);
+    return true;
+}
+export const getTenantID = () => {
+    const tenant_id = localStorage.getItem('tenant_id');
+    return tenant_id;
+}

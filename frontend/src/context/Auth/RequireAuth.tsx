@@ -1,19 +1,29 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { AuthContext } from "./AuthContext"
-import { Outlet } from "react-router-dom";
+import { Outlet, createBrowserRouter, useParams } from "react-router-dom";
 import Login from "../../pages/Login/Login";
 import { getTokenLogin } from "../../utils/tokenLogin";
+import { getSubdomain, getTenantID } from "../../utils/helpers";
+import { PageNotFound } from "../../components/PageNotFound/PageNotFound";
+// let router = createBrowserRouter(routes, { basename: "/base" })
 
 export const RequireAuth = () => {
-    const [isLogged, signin, token ,signout, rememberToken, setRememberToken] = useContext(AuthContext);
-    // console.log(isLogged);
-    // console.log(localStorage.getItem('myKey'));
+    // console.log('require auth')
+    // const params = useParams();
+    // console.log(params);
+    
+    const [isLogged, signin, token ,signout, rememberToken, setRememberToken, tenant] = useContext(AuthContext);
+    
+    // verifyDomainExist();
+    // console.log('carregou auth require');
+    // console.log(tenant);
+
     
     const remember_token =  localStorage.getItem('ID');
     let tokenUser  = getTokenLogin(false); //sessionStorage
-    
-    
-    console.log(remember_token);
+    // console.log('rodouuu require');
+
+   
     
     //FAZER A FUNÇÃO QUE FAZ A REQUISIÇÃO PARA O BANCO SE O BACKEND NO LOCAL STORAGE É IGUAL AO QUE ESTÁ NO BANCO
    
