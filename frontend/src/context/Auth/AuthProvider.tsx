@@ -10,6 +10,10 @@ type childrenType = {
     children: JSX.Element
 }
 // const [teste, setTeste] = useState<any>();
+
+const parsedData = window.location.pathname.split("/"); 
+let domain = parsedData[1];
+console.log('auth provider ' + domain)
 export const AuthProvider = ({children}: childrenType) => {
 
    
@@ -43,6 +47,7 @@ export const AuthProvider = ({children}: childrenType) => {
             console.log(auth);
             setIsLogged(auth.result.user);//dados do usuario
             setTokenLogin(auth.result.token, rememberToken);//"../../utils/tokenLogin";
+        
             setTenantId(auth.result.tenant);
             setDataUser(auth.result.user, rememberToken);//
           

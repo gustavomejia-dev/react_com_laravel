@@ -8,7 +8,9 @@ import { APPS } from "./constants";
 //     const app = APPS.find((app) => subDomain === app.subDomain);
 //     console.log(subDomain);
 // }
+export const getUserInfo = () => {
 
+}
 export const getSubdomain = (location : string) => {
     
     const locationParts = location.split(".");
@@ -21,7 +23,11 @@ export const getSubdomain = (location : string) => {
  
     // return locationParts[0];
 }
-
+export const getTenant = () => {
+    const parsedData = window.location.pathname.split("/"); 
+    const domain = parsedData[1];
+    return domain;
+}
 export const setTenantId = (tenant : string) => {
     localStorage.setItem('tenant_id', tenant);
     return true;

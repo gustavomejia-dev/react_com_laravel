@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\SendMessageWebSocketEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -31,20 +32,23 @@ class ProductController extends Controller
     {   
 
 
-        return response()->json($request->all());
         $dadosValidados = $request->validate(
         [   
-            'filter.nome' => ['required'],
+            'filter.name' => ['required'],
             'filter.tipo' => ['required'],
             'filter.qtd' => ['required'],
             'filter.status' => ['required'],
-            'tenant_id' => ['required']
+            'tenant_id' => ['required'],
+            'user_id' => ['required']
         ]
             
         );
-        // return $dadosValidados;
+    
         if($dadosValidados){
-           Product::create($dadosValidados);
+            Product::create($dadosValidados);
+            broadcast(new SendMessageWebSocketEvent());
+            return true;
+           
         }
         
 

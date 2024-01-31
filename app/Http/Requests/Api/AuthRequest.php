@@ -26,7 +26,7 @@ class AuthRequest extends FormRequest
             'password' => 'required|max:255',
             'remember_token' => 'boolean',
             
-            'tenant' => 'required'
+            'tenant_id' => 'required'
             // 'body' => 'required',
             // 'email' => ['required|email|max:255'],
             // 'password' => ['required|max:255'],

@@ -1,5 +1,5 @@
 
-import { DatePicker, Row, Col, Form, Input, Button, message, Space, Checkbox, Result } from 'antd';
+import { DatePicker, Row, Col, Form, Input, Button, message, Space, Checkbox, Result, Card } from 'antd';
 import { useApi } from '../../hooks/useApi';
 import { AuthContext } from '../../context/Auth/AuthContext';
 import React, { useContext, useEffect, useState } from 'react'
@@ -11,8 +11,7 @@ import ForgetPassword from '../../components/Password/ForgetPassword';
 import Item from 'antd/es/list/Item';
 import '../../hooks/websocket'
 import { echo } from '../../hooks/websocket';
-import { getSubdomain } from '../../utils/helpers';
-import { verify } from 'crypto';
+
 import { PageNotFound } from '../../components/PageNotFound/PageNotFound';
 
 import { basename } from 'path/posix';
@@ -22,8 +21,6 @@ import { basename } from 'path/posix';
 // let verifySubDoMain = '';
 function Login() {
    
-    const {tenant} = useParams();
-    console.log(tenant);
     // const [theme, toggleTheme] = useContext(AuthContext);
     // console.log('adom ' + subDomain);
    
@@ -46,7 +43,7 @@ function Login() {
 
     //     // Listen for the event called "button.clicked"
     //     .listen('.SendMessageWebsocketEvent', (e: any) => {
-            
+    //         alert(e.message);
     //         // Display the "message" in an alert box
     //         // localStorage.clear();
            
@@ -54,12 +51,8 @@ function Login() {
         
     //     //se já estiver logado ele simplesmente já direciona para a rota privada
     //     // console.lo  g('login', remember_token);
-    //     if(token && remember_token != ''){
-    //         navigate('/private');
-          
-    //         return ;
-    //     }
-    //     return () => {console.log('unmount')}
+       
+       
         
     // },[]);
     
@@ -73,18 +66,20 @@ function Login() {
             return false;
         }
 
-        const result = await signin(email, password, rememberToken, tenant);
+        const result = await signin (email, password, rememberToken);
+       
         
         if(result){
             
             // console.log('logado');
-            
-            navigate(`/${tenant}/private`);
+                
+            navigate(`/private`);
             // window.location.reload();
             
             return true;
         }
         else{
+           
             message.error('Credenciais Invalidas');
         }   
         // console.log(result);
@@ -117,23 +112,30 @@ function Login() {
   return (
     
       <div className='container align-self-center'>
-        <p>teste: {process.env.REACT_APP_NOME_DA_VARIAVEL}</p>
+     
         
+ 
+
         <Row 
         justify="center"
         align="middle"
         style={{
-            height: '100vh'
+            height: '100vh',
+            backgroundColor: '#e6e6e6',
+            
             
         }}>
             
-            <Col span={10}>
-                <Form name="basic" labelCol={{span:8}} wrapperCol={{span: 16}} onFinish={handleSubmit}>
-                    <Form.Item label='Email' name='email'>
-                        <Input onChange={handleInputEmail}/>
+            <Col span={12}  style={{backgroundColor: '#001529',
+                                     height:'300px', borderRadius: '10px',
+                                   }}>
+                                    
+                <Form style={{  marginTop: '5%', }} name="basic" labelCol={{span:8}} wrapperCol={{span: 8}} onFinish={handleSubmit}>
+                    <Form.Item style={{ font:'white' }} label={<label style={{ color: "white" }}>Email</label>} name='email'>
+                        <Input style={{ color:'white' }} onChange={handleInputEmail}/>
                     </Form.Item>
-                    <Form.Item label='Password' name='password'>
-                        <Input.Password onChange={handleInputPassword}/>
+                    <Form.Item style={{ color:'white' }} label={<label style={{ color: "white" }}>Senha</label>} name='password'>
+                        <Input.Password style={{ color:'white' }} onChange={handleInputPassword}/>
 
                     </Form.Item>
     

@@ -30,12 +30,10 @@ class LoginController extends Controller
     
         
         $validated = $request->validated();
-        if(!$validated['tenant']){
-            return 'aquiii';
-        }
+        
         
  
-        $user = User::where('email', $validated['email'])->where('tenant_id', $validated['tenant'])->first();
+        $user = User::where('email', $validated['email'])->where('tenant_id', $validated['tenant_id'])->first();
          
         //caso o checkbox remember me esteja selecionado,  cai nesse if
         // if(isset($validated['remember_token'])){
@@ -52,7 +50,7 @@ class LoginController extends Controller
         $user->tokens()->delete();//desloga de todos os outros dispositivos logados
         //token de autenticação
         $token = $user->createToken('token_name')->plainTextToken;
-        
+        // return $token;
         // return response()->json($token);
         // $token = $request->user()->createToken($request->token_name);
         

@@ -7,24 +7,25 @@ import Private from "./pages/Private/Private";
 import { TableUsuarios } from "./components/Sidebar/Usuarios/TableUsuarios";
 import { Produtos } from "./components/Sidebar/Cadastrar/Produtos";
 import { PageNotFound } from "./components/PageNotFound/PageNotFound";
+import { getTenant } from "./utils/helpers";
+import { DashboardPrincipal } from "./components/Dashboard/Principal";
 
 // import { Users } from "./components/Sidebar/Users";
 
-const parsedData = window.location.pathname.split("/"); 
-let domain = parsedData[1];
-console.log('dominio' + domain);
+
+const tenant = getTenant();
 
 const router = createBrowserRouter (
     
     [
             
         {
-            path: '/:tenant/',
-            element: <Navigate to = "/:tenant/login"/>
+            path: '/',
+            element: <Navigate to = "/login"/>
             
         },
         {
-            path:'/:tenant/login', 
+            path:'/login', 
             element:<Login/>
         },
         {
@@ -39,9 +40,13 @@ const router = createBrowserRouter (
                                    
                                     {
                                     element: <LayoutPrincipal/>,
-                                    path: `${domain}/private`,
+                                    path: `/private`,
                                     
                                     children: [
+                                            {
+                                                path:`/private`, 
+                                                element:<DashboardPrincipal/>
+                                            },
                                             {
                                                 path:`usuario`, 
                                                 element:<TableUsuarios/>
@@ -69,6 +74,6 @@ const router = createBrowserRouter (
             element: <PageNotFound messageDefault={false}/>
         },
 
-    ]
+    ],  {basename : `/${tenant}`}
 );
 export default router;

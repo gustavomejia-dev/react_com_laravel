@@ -2,9 +2,10 @@ import { AxiosRequestConfig, HttpStatusCode } from 'axios';
 import axios from 'axios';
 import { getTokenLogin } from '../utils/tokenLogin';
 import { ExceptionStatusType } from 'antd/es/result';
-import { getSubdomain } from '../utils/helpers';
+import { getSubdomain, getTenant } from '../utils/helpers';
 import { useContext } from 'react';
 import { AuthContext } from '../context/Auth/AuthContext';
+import { getDataUser } from '../utils/dataUser';
 export const apiUrl = axios.create({
     baseURL : 'http://fastfood.sis/api',
 })
@@ -19,7 +20,9 @@ export var config: AxiosRequestConfig = {
     },
     params: {
        //obter metodo dinamico para obter o domain
-        user_data: getTokenLogin()
+        user_data: getTokenLogin(),
+        tenant_id: getTenant(),
+        user_id: '2',
       },
     headers: {
         Authorization: 'Bearer ' + getTokenLogin(),
@@ -36,10 +39,10 @@ export var config: AxiosRequestConfig = {
 //404 as informações estão incorretas
 export const useApi = () => ({
     signin: async(email: string, password: string, remember_token: string, tenant : string) =>{
-     
+  
         // const result = await axios.post('https://reqres.in/api/login', {email, password});
       
-        const result = await apiUrl.post('login', {email, password, remember_token, tenant}, config)
+        const result = await apiUrl.post('login', {email, password, remember_token}, config)
         .then((response) => {
           
             return response.data;

@@ -2,18 +2,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   DesktopOutlined,
   FileOutlined,
+  NotificationOutlined,
   PieChartOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { BrowserRouter, Link, Outlet, useParams } from 'react-router-dom';
 import { getDataUser } from '../utils/dataUser';
 import { Ul } from '../components/Header/HeaderList';
 import { config } from '../hooks/useApi';
 import { AuthContext } from '../context/Auth/AuthContext';
-
+import { echo } from '../hooks/websocket';
 const { Header, Content, Footer, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -71,8 +72,10 @@ function LayoutPrincipal() {
       return arr;
     
   }
+  
  
   return (
+    
     <Layout style={{ minHeight: '100vh' }}>
       <Sider>
         <div className="demo-logo-vertical" />
@@ -87,7 +90,7 @@ function LayoutPrincipal() {
             <Menu.Item key="2">
                     <PieChartOutlined />
                     <span>Usuarios</span>
-                    <Link to="private/usuario"/>
+                    <Link to="usuario"/>
             </Menu.Item>
             {/* <Menu.Item key="3">
                     <PieChartOutlined />
@@ -96,12 +99,25 @@ function LayoutPrincipal() {
                     <Link to="private/produtos"/>
             </Menu.Item> */}
             <Menu.SubMenu title="Cadastrar">
-            <Menu.Item key="3">
-                    <PieChartOutlined />
-                    <span>Produtos</span>
-                    
-                    <Link to="cadastrar/produtos"/>
-            </Menu.Item>
+              <Menu.Item key="3">
+                      <PieChartOutlined />
+                      <span>Produtos</span>
+                      
+                      <Link to="cadastrar/produtos"/>
+              </Menu.Item>
+              <Menu.Item key="4">
+                      <PieChartOutlined />
+                      <span>Usuario</span>
+                      
+                      <Link to="cadastrar/produtos"/>
+              </Menu.Item>
+              <Menu.Item key="5">
+                      <PieChartOutlined />
+                      <span>Cliente</span>
+                      
+                      <Link to="cadastrar/produtos"/>
+              </Menu.Item>
+             
 
 
             </Menu.SubMenu>
@@ -109,7 +125,10 @@ function LayoutPrincipal() {
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: 'white' }} >
+        
+        
           <Ul/>
+        
         </Header>
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
@@ -117,6 +136,7 @@ function LayoutPrincipal() {
             {/* <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
           </Breadcrumb>
           <div style={{ padding: 24, minHeight: 360, background:'white' }}>
+           
              {/* AQUI CARREGA O COMPONENTE DINAMICAMENTE */}
             <Outlet/>
           </div>

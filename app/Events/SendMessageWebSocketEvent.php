@@ -18,9 +18,9 @@ class SendMessageWebSocketEvent implements ShouldBroadcast
      * Create a new event instance.
      */
     public $message;
-    public function __construct($msg)
+    public function __construct()
     {
-        $this->message = $msg;
+        $this->message;
     }
 
     /**

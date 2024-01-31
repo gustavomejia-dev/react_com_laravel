@@ -15,10 +15,12 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('tenant_id');
-           
             $table->foreignId('user_id');
-            $table->string('name');
-            $table->decimal('price', 9, 3);
+            $table->string('nome');
+            $table->string('tipo');
+            $table->decimal('preco', 9, 3);
+            $table->string('qtd');
+            $table->string('status');
             $table->timestamps();
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });

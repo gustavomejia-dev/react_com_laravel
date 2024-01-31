@@ -28,7 +28,7 @@ const [data, setData] = useState<any>([]);
 const [filter, setfilter] = useState(
 
       { 
-            nome : '',
+            name : '',
             tipo : '',
             qtd: '',
             status: '',
@@ -70,7 +70,7 @@ const [filter, setfilter] = useState(
             >
             
             <Form.Item label="Nome">
-                <Input name='nome' onChange={handleChange}/>
+                <Input name='name' onChange={handleChange}/>
             </Form.Item>
             <Form.Item label="Tipo" name="tipo">
                 <Select onChange={(e) => {

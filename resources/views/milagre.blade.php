@@ -12,7 +12,7 @@
 </body>
 <script>
     window.addEventListener('load',  () =>{
-        console.table(window.Echo);
+        
 
         Echo.channel('public-channel')
 
@@ -20,8 +20,8 @@
         .listen('.SendMessageWebsocketEvent', (e) => {
             
             // Display the "message" in an alert box
-            alert(e.message);
-            console.log('oi');
+            alert('oiii');
+            
         });
         
     })
