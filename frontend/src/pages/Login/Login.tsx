@@ -1,5 +1,5 @@
 
-import { DatePicker, Row, Col, Form, Input, Button, message, Space, Checkbox, Result, Card } from 'antd';
+import { DatePicker, Row, Col, Form, Input, Button, message, Space, Checkbox, Result, Card, Typography } from 'antd';
 import { useApi } from '../../hooks/useApi';
 import { AuthContext } from '../../context/Auth/AuthContext';
 import React, { useContext, useEffect, useState } from 'react'
@@ -15,8 +15,9 @@ import { echo } from '../../hooks/websocket';
 import { PageNotFound } from '../../components/PageNotFound/PageNotFound';
 
 import { basename } from 'path/posix';
+import { UserOutlined } from '@ant-design/icons';
 
-
+const { Title } = Typography;
 
 // let verifySubDoMain = '';
 function Login() {
@@ -121,27 +122,40 @@ function Login() {
         align="middle"
         style={{
             height: '100vh',
-            backgroundColor: '#e6e6e6',
+            backgroundColor: 'white',
+            
             
             
         }}>
             
-            <Col span={12}  style={{backgroundColor: '#001529',
-                                     height:'300px', borderRadius: '10px',
+            <Col span={12}  style={{backgroundColor: 'white',
+                                     height:'400px', borderRadius: '10px',
+                                     border: '2px solid #001529'
+                                     
                                    }}>
-                                    
+                   
+                <Row style={{height: '90px', gap: '5px'}} justify="center"
+                        align="middle">
+                    <Space direction='vertical'>
+                        <UserOutlined style={{ fontSize: '36px', color: '#001529', height: '100px' }}/>
+                       
+                    </Space>
+                    <Title style={{color:'#001529', textAlign:'center'}} level={1}>Login</Title>
+                    
+                    
+                </Row>        
                 <Form style={{  marginTop: '5%', }} name="basic" labelCol={{span:8}} wrapperCol={{span: 8}} onFinish={handleSubmit}>
-                    <Form.Item style={{ font:'white' }} label={<label style={{ color: "white" }}>Email</label>} name='email'>
+                    <Form.Item style={{ font:'white' }} label={<label style={{ color: "#001529" }}>Email</label>} name='email'>
                         <Input style={{ color:'white' }} onChange={handleInputEmail}/>
                     </Form.Item>
-                    <Form.Item style={{ color:'white' }} label={<label style={{ color: "white" }}>Senha</label>} name='password'>
+                    <Form.Item style={{ color:'white' }} label={<label style={{ color: "#001529" }}>Senha</label>} name='password'>
                         <Input.Password style={{ color:'white' }} onChange={handleInputPassword}/>
 
                     </Form.Item>
     
                     <Form.Item wrapperCol={{offset:8, span:16}} >
                         <Button  type='primary' htmlType='submit'>Logar</Button>
-                        <Checkbox onChange={handleRememberCheckbox} name='remember' style={{paddingLeft: '1rem'}}>Remember me</Checkbox>
+                        <Checkbox onChange={handleRememberCheckbox} name='remember' style={{paddingLeft: '1rem'}}><label style={{ color: "#001529" }}>Lembrar Me</label></Checkbox>
                     </Form.Item>
                    
                      <Form.Item wrapperCol={{offset:8, span:16}}>
@@ -149,7 +163,7 @@ function Login() {
                                 Esqueceu sua Senha ?  
                          </Link>
                     </Form.Item>
-                            
+                                      
                 
                    
                 </Form>
