@@ -51,11 +51,11 @@ class UserController extends Controller
     public function store(StoreUpdateUserRequest $request){
       
         $data = $request->validated();//enviando apenas valores validados
-        // return response()->json($data);
+        
         $data['password'] = bcrypt($request->password);//encript password
     
         $user = User::create($data);//tomar cuidado ao enviar um array
-        // return $user;
+    
         return new UserResource($user);
     }
 

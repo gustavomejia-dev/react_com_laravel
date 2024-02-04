@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Events\SendMessageWebSocketEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -28,29 +30,35 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {   
 
-
-        $dadosValidados = $request->validate(
-        [   
-            'filter.name' => ['required'],
-            'filter.tipo' => ['required'],
-            'filter.qtd' => ['required'],
-            'filter.status' => ['required'],
-            'tenant_id' => ['required'],
-            'user_id' => ['required']
-        ]
+        
+        // $id = auth()->user()->tenant_id;
+        // return $id;
+        $dadosValidados= $request->validated();
+        // return Auth::user()->tenant_id;
+        // Product::create($dadosValidados);
+        // return $dadosValidados;
+        // return $dadosValidados;
             
-        );
+       
     
         if($dadosValidados){
-            Product::create($dadosValidados);
+            
+            Product::create([
+                // 'tenant_id'=> 'Gustavo',
+                'nome' => 'Teclado',
+                'preco' => '1000',
+                'tipo' => '1',
+                'qtd' => '50',
+                'status'=> 'A'
+            ]);
             broadcast(new SendMessageWebSocketEvent());
-            return true;
+            
            
         }
-        
+        return response()->json($dadosValidados, 200);
 
     }
 

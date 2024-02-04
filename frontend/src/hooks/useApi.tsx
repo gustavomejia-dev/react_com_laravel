@@ -39,7 +39,7 @@ export var config: AxiosRequestConfig = {
 //404 as informações estão incorretas
 export const useApi = () => ({
     signin: async(email: string, password: string, remember_token: string, tenant : string) =>{
-  
+        console.log(getTokenLogin());
         // const result = await axios.post('https://reqres.in/api/login', {email, password});
       
         const result = await apiUrl.post('login', {email, password, remember_token}, config)

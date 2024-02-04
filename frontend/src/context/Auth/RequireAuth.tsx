@@ -19,8 +19,9 @@ export const RequireAuth = () => {
     // console.log(tenant);
 
     
-    const remember_token =  localStorage.getItem('ID');
-    let tokenUser  = getTokenLogin(false); //sessionStorage
+    const remember_token =  localStorage.getItem('key');
+    let tokenUser  = getTokenLogin(); //sessionStorage
+    console.log('token usuario: ' + tokenUser);
     // console.log('rodouuu require');
 
    

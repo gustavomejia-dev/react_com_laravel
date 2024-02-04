@@ -16,6 +16,7 @@ import { PageNotFound } from '../../components/PageNotFound/PageNotFound';
 
 import { basename } from 'path/posix';
 import { UserOutlined } from '@ant-design/icons';
+import { getTenant } from '../../utils/helpers';
 
 const { Title } = Typography;
 
@@ -67,22 +68,31 @@ function Login() {
             return false;
         }
 
-        const result = await signin (email, password, rememberToken);
-       
         
-        if(result){
-            
+        const tenant = getTenant();
+        console.log(tenant);
+        const arr_tenant_nao_validos = ['', 'login'];
+        
+        if(!arr_tenant_nao_validos.includes(tenant)){
+            // alert(tenant);
+            const result = await signin (email, password, rememberToken);
+           
             // console.log('logado');
                 
-            navigate(`/private`);
+            
+            if(result){
+                navigate(`/private`);
+            } else{
+           
+                message.error('Credenciais Invalidas');
+            }   
             // window.location.reload();
             
             return true;
+        }else{
+            message.error('Digite O nome do Banco');
         }
-        else{
-           
-            message.error('Credenciais Invalidas');
-        }   
+       
         // console.log(result);
         // console.log(token);
         // console.log('resultado do login ' + result);
@@ -109,7 +119,7 @@ function Login() {
         setRememberToken(event.target.checked);//vem do Provider
         // console.log(rememberToken);
     }
-
+    console.log('token ' + getTokenLogin())
   return (
     
       <div className='container align-self-center'>
@@ -145,11 +155,11 @@ function Login() {
                     
                 </Row>        
                 <Form style={{  marginTop: '5%', }} name="basic" labelCol={{span:8}} wrapperCol={{span: 8}} onFinish={handleSubmit}>
-                    <Form.Item style={{ font:'white' }} label={<label style={{ color: "#001529" }}>Email</label>} name='email'>
-                        <Input style={{ color:'white' }} onChange={handleInputEmail}/>
+                    <Form.Item style={{ font:'white' }} label='Email'name='email'>
+                        <Input  onChange={handleInputEmail}/>
                     </Form.Item>
-                    <Form.Item style={{ color:'white' }} label={<label style={{ color: "#001529" }}>Senha</label>} name='password'>
-                        <Input.Password style={{ color:'white' }} onChange={handleInputPassword}/>
+                    <Form.Item label={<label style={{ color: "#001529" }}>Senha</label>} name='password'>
+                        <Input.Password onChange={handleInputPassword}/>
 
                     </Form.Item>
     

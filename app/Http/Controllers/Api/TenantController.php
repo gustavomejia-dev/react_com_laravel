@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\TenantRequest;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,33 +29,13 @@ class TenantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TenantRequest $request)
     {   
         // DB::enableQueryLog();
         /* Criar a validação dos dados */
         $result = '';
-        // return Tenant::all();
-        // return $request->emp_cnpj;
-        $tenant = Tenant::create(
-            [   
-                'id' => $request->id,
-                'cnpj' =>  $request->cnpj,
-                'razao_social' => $request->razao_social,
-                'nome_fantasia' => $request->nome_fantasia,
-                'plano' => $request->plano,
-                'status' => $request->status,
-                'usu_id_alteracao' => $request->usu_id,
-                'usu_id_cadastro' => $request->usu_cadastro
-                
-            ]
-        );
-        // dd(DB::getQueryLog());
-        $tenant->domains()
-                        ->create(
-                                    [
-                                        'domain' => $request->emp_domain
-                                    ]
-                                ) ? $result = true: $result = false;
+        $validated = $request->validated();
+        $tenant = Tenant::create($request);
         return response()->json($result, 200);                       
 
     }

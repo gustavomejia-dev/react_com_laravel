@@ -5,7 +5,9 @@ import {
   NotificationOutlined,
   PieChartOutlined,
   TeamOutlined,
+  UserAddOutlined,
   UserOutlined,
+  UsergroupAddOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
@@ -88,7 +90,7 @@ function LayoutPrincipal() {
             </Menu.Item>
 
             <Menu.Item key="2">
-                    <PieChartOutlined />
+                    <UserAddOutlined />
                     <span>Usuarios</span>
                     <Link to="usuario"/>
             </Menu.Item>
@@ -98,6 +100,29 @@ function LayoutPrincipal() {
                     
                     <Link to="private/produtos"/>
             </Menu.Item> */}
+             <Menu.SubMenu title="Buscar">
+              <Menu.Item key="3">
+                      <PieChartOutlined />
+                      <span>Produtos</span>
+                      
+                      <Link to="cadastrar/produtos"/>
+              </Menu.Item>
+              <Menu.Item key="4">
+                      <UserAddOutlined style={{ fontSize: '18px' }}/>
+                      <span>Usuario</span>
+                      
+                      <Link to="cadastrar/usuario"/>
+              </Menu.Item>
+              <Menu.Item key="5">
+                      <UsergroupAddOutlined style={{ fontSize: '18px' }}/>
+                      <span>Cliente</span>
+                      
+                      <Link to="cadastrar/produtos"/>
+              </Menu.Item>
+             
+
+
+            </Menu.SubMenu>
             <Menu.SubMenu title="Cadastrar">
               <Menu.Item key="3">
                       <PieChartOutlined />
@@ -106,13 +131,13 @@ function LayoutPrincipal() {
                       <Link to="cadastrar/produtos"/>
               </Menu.Item>
               <Menu.Item key="4">
-                      <PieChartOutlined />
+                      <UserAddOutlined style={{ fontSize: '18px' }}/>
                       <span>Usuario</span>
                       
-                      <Link to="cadastrar/produtos"/>
+                      <Link to="cadastrar/usuario"/>
               </Menu.Item>
               <Menu.Item key="5">
-                      <PieChartOutlined />
+                      <UsergroupAddOutlined style={{ fontSize: '18px' }}/>
                       <span>Cliente</span>
                       
                       <Link to="cadastrar/produtos"/>

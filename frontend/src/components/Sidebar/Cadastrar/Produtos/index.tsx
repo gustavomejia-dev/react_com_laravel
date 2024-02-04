@@ -7,6 +7,7 @@ import {
   Input,
   InputNumber,
   Radio,
+  Row,
   Select,
   Switch,
   TreeSelect,
@@ -28,10 +29,11 @@ const [data, setData] = useState<any>([]);
 const [filter, setfilter] = useState(
 
       { 
-            name : '',
+            nome : '',
             tipo : '',
             qtd: '',
             status: '',
+            preco: ''
   
       }
   );
@@ -47,7 +49,7 @@ const [filter, setfilter] = useState(
 
     const cadastrarProduto = async () => {
         const produto = await apiUrl.post('/produto', {filter}, config);
-        console.log(produto);
+        console.log(filter);
         console.log(typeof(filter));
     }
     const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
@@ -57,23 +59,23 @@ const [filter, setfilter] = useState(
     };
 
   return (
-    <>
-        <h1>Cadastro de Produtos</h1>
+    
+        
             <Form
-            labelCol={{ span: 4 }}
+            labelCol={{ span: 6 }}
             wrapperCol={{ span: 14 }}
             layout="horizontal"
             initialValues={{ size: componentSize }}
             onValuesChange={onFormLayoutChange}
             size={componentSize as SizeType}
-            style={{ maxWidth: 600 }}
+            style={{ maxWidth: 900, padding: '2%'}}
             >
-            
+            <h1>Cadastro de Produtos</h1>
             <Form.Item label="Nome">
-                <Input name='name' onChange={handleChange}/>
+                <Input style={{ width: 190,  }} name='nome' onChange={handleChange}/>
             </Form.Item>
             <Form.Item label="Tipo" name="tipo">
-                <Select onChange={(e) => {
+                <Select style={{ width: 150 }} onChange={(e) => {
                     filter.tipo = e;
                     console.log(filter.qtd)
                 }}>
@@ -88,12 +90,21 @@ const [filter, setfilter] = useState(
             {/* <Form.Item label="DatePicker">
                 <DatePicker />
             </Form.Item> */}
+            <Form.Item label="Preço" >
+                <Input name="preco" style={{ width: 150 }}
+                    defaultValue="0"
+                    min="0"
+                    max="10"
+                    
+                 
+                 onChange={handleChange}/>
+            </Form.Item>
             <Form.Item label="Quantidade" >
                 <InputNumber name="qtd"
                  onChange={(e: any)=> filter.qtd = e}/>
             </Form.Item>
             <Form.Item label="Status"  valuePropName="checked" >
-            <Select onChange={(e) => {
+            <Select style={{ width: 120 }} onChange={(e) => {
                     filter.status = e;
                     
                 }}>
@@ -106,7 +117,7 @@ const [filter, setfilter] = useState(
                 <Button onClick={cadastrarProduto}>Cadastrar</Button>
             </Form.Item>
             </Form>
-    </>
+ 
   );
 };
 
